@@ -19,10 +19,7 @@
 body {
  background: #ECF0F3;
  font-family: 'Open Sans', sans-serif;
-}
-
-ul {
- padding: 0 5px
+ height: 100vh
 }
 
 div.avatar {
@@ -38,6 +35,10 @@ figure.img-avatar img {
  box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1)
 }
 
-aside.sidebar {
+ul.menu-list {
+ border-left: 1px darkgrey solid
+}
+
+aside.sidebar, div.content {
  margin: 20px 0
 }

@@ -1,3 +1,19 @@
+<?php 
+session_start();
+
+require 'functions.php';
+
+if ($_SESSION["login"]) {
+
+$id_penjual = $_SESSION["id_penjual"];
+$result = mysqli_query($conn, "SELECT * FROM penjual WHERE id_penjual = '$id_penjual'");
+
+$penjual = mysqli_fetch_assoc($result);
+
+}
+
+ ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -53,7 +69,7 @@
        <figure class="img-avatar">
         <img src="assets/img/avatar.png" alt="">
        </figure>
-       <div class="id-admin">Id_Penjual</div>
+       <div class="id-admin"><?= $penjual["username"] ?></div>
       </div>
       <hr>
       <p class="menu-label">General</p>

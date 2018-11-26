@@ -1,3 +1,38 @@
+<?php 
+session_start();
+
+require 'functions.php';
+
+if (isset($_POST["login"])) {
+
+  $username = htmlspecialchars($_POST["username"]);
+  $password = htmlspecialchars($_POST["password"]);
+  
+  $result = mysqli_query($conn, "SELECT * FROM penjual WHERE username = '$username'");
+
+  if ( mysqli_num_rows($result) ) {
+    
+    //cek password
+    $row = mysqli_fetch_assoc($result);
+    if ($password == $row["password"]) {
+        $_SESSION["login"] = true;
+        $_SESSION["username"] = "$username";
+        header("Location: penjual.php");
+        exit;
+    } else {
+      echo "<script>
+          alert('password tidak cocok');
+      </script>";
+    } 
+  } else {
+    echo "<script>
+          alert('username tidak ditemukan');
+      </script>";
+  }
+}
+
+ ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -21,11 +56,11 @@
       <h3 class="title has-text-grey">Login</h3>
       <p class="subtitle has-text-grey">Login to Proceed.</p>
       
-      <form action="">
+      <form action="" method="post">
 
        <div class="field">
         <div class="control has-icons-left has-icon-right">
-         <input type="text" class="input" placeholder="Username" autofocus>
+         <input type="text" class="input" placeholder="Username" name="username" autofocus required>
          <span class="icon is-small is-left">
           <i class="fa fa-user"></i>
          </span>
@@ -34,7 +69,7 @@
 
        <div class="field">
         <div class="control has-icons-left has-icon-right">
-         <input type="password" class="input" placeholder="Password">
+         <input type="password" class="input" placeholder="Password" name="password" required>
          <span class="icon is-small is-left">
           <i class="fa fa-lock"></i>
          </span>
@@ -42,7 +77,7 @@
        </div>
 
        <div class="field">
-        <button class="button is-block is-info is-fullwidth">Submit</button>
+        <button class="button is-block is-info is-fullwidth" name="login">login</button>
        </div>
 
       </form>

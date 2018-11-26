@@ -1,12 +1,18 @@
 .tabs {
  margin-bottom: -1px !important;
  position: relative;
+ border-bottom: 1px rgba(10, 10, 10, .2) solid
+ 
 }
 
 .tab-content {
  padding: 20px 0;
- color: #000;
  background-color: white;
+ /* box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1) */
+}
+
+form {
+ padding: 5px
 }
 
 .tab-pane {
@@ -19,6 +25,11 @@
 
 .is-active {
  display: initial;
+}
+
+.tabs.is-boxed.is-centered li.is-active a {
+ background-color: #209cee!important;
+ border: none
 }
 
 .cent {

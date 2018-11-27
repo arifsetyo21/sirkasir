@@ -42,3 +42,12 @@ ul.menu-list {
 aside.sidebar, div.content {
  margin: 20px 0
 }
+
+th.noborderbottom{
+    border-bottom: 0px;
+    border-width: 0px;
+}
+th.nobordertop{
+    border-top: 0px;
+    border-width: 0px;
+}

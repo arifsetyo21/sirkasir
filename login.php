@@ -6,6 +6,7 @@ if (isset($_POST["login"])) {
 
   $username = htmlspecialchars($_POST["username"]);
   $password = htmlspecialchars($_POST["password"]);
+  $login    = htmlspecialchars($_POST["login"]);
   
   $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE username = '$username'");
 
@@ -14,8 +15,12 @@ if (isset($_POST["login"])) {
     //cek password
     $row = mysqli_fetch_assoc($result);
     if ($password == $row["password"]) {
+      $id_karyawan = $row["id_karyawan"];
+      $_SESSION["login"] = $_POST["login"];
+      $_SESSION["id_karyawan"] = $id_karyawan;
+  
       if ($row["bagian"] == "kasir") {
-        header("Location: kasir.php");
+        header("Location: dashboard-kasir.php");
         exit;
       } elseif ( $row["bagian"] == "petugas") {
         header("Location: petugas.php");

@@ -18,5 +18,4 @@ function query($query) {
 }
 
 
-
  ?>

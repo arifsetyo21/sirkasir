@@ -1,3 +1,15 @@
+<?php 
+session_start();
+
+require 'functions.php';
+
+if ($_SESSION["login"]="login") {
+$id_karyawan = $_SESSION["id_karyawan"];
+$result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
+$id_karyawan = mysqli_fetch_assoc($result);
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -33,7 +45,7 @@
      </div>
      <div class="navbar-end">
       <div class="navbar-item">
-       <a class="button is-danger" href="">Logout</a>
+       <a class="button is-danger" href="functionsLogout.php">Logout</a>
       </div>
      </div>
     </div>
@@ -52,7 +64,7 @@
        <figure class="img-avatar">
         <img src="assets/img/avatar.png" alt="">
        </figure>
-       <div class="id-admin">Id_Kasir</div>
+       <div class="id-admin"><?php echo $id_karyawan["username"]?></div>
       </div>
       <hr>
       <p class="menu-label">General</p>
@@ -81,7 +93,7 @@
 
      <div class="box content is-fullwidth" style="margin-top:5px;">
       <div class="pesanan">
-       <table style="100%">
+       <table>
         <thead>
          <tr><th>#</th><th>Pesanan</th><th>Harga</th><th class="" colspan="3">Jumlah</th><th>Subtotal</th></tr>
         </thead>
@@ -125,31 +137,31 @@
         </tbody>
         <tfoot>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>TOTAL : </th>
-                <th>100K</th>
+                <th class="noborderbottom"></th>
+                <th class="noborderbottom"></th>
+                <th class="noborderbottom"></th>
+                <th class="noborderbottom"></th>
+                <th class="noborderbottom"></th>
+                <th class="noborderbottom">TOTAL : </th>
+                <th class="noborderbottom">100K</th>
             </tr>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>BAYAR : </th>
-                <th style="max-width:100px;"><input type="text" class="input"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop">BAYAR : </th>
+                <th style="max-width:100px;" class="noborderbottom nobordertop"><input type="text" class="input"></th>
             </tr>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>KEMBALIAN : </th>
-                <th>100K</th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop"></th>
+                <th class="noborderbottom nobordertop">KEMBALIAN : </th>
+                <th class="noborderbottom nobordertop">100K</th>
             </tr>
         </tfoot>
        </table>

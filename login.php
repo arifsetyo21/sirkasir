@@ -45,6 +45,7 @@ if (isset($_POST["login"])) {
       $id_penjual = $row["id_penjual"];
       $_SESSION["login"] = true;
       $_SESSION["id_penjual"] = $id_penjual;
+      $_SESSION["user"] = "employe";
 
       header("Location: dashboard-penjual.php");
       }else {
@@ -80,10 +81,6 @@ if (isset($_POST["login"])) {
    <div class="container has-text-centered">
 
     <div class="column is-4 is-offset-4">
-
-    <div style="padding:25px">
-      <img src="assets/img/logo.png" alt="">
-     </div>
      
      <div style="padding:25px">
       <img src="assets/img/logo.png" alt="">

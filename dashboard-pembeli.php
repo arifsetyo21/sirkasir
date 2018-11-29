@@ -62,7 +62,7 @@ $pembeli = mysqli_fetch_assoc($result);
   <div class="navbar-end">
    <div class="navbar-item">
     <a class="nama" href="">Selamat Datang, <?= $pembeli["nama"] ?></a>
-    <a class="button is-danger" href="functionLogout.php">Logout</a>
+    <a class="button is-danger" href="logout.php">Logout</a>
    </div>
   </div>
  </div>

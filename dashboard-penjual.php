@@ -52,7 +52,7 @@ $penjual = mysqli_fetch_assoc($result);
      </div>
      <div class="navbar-end">
       <div class="navbar-item">
-       <a class="button is-danger" href="functionLogout.php">Logout</a>
+       <a class="button is-danger" href="logout.php">Logout</a>
       </div>
      </div>
     </div>

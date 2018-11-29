@@ -19,6 +19,7 @@ if (isset($_POST["login"])) {
       $id_pelanggan = $row["id_pelanggan"];
       $_SESSION["login"] = true;
       $_SESSION["id_pelanggan"] = $id_pelanggan;
+      $_SESSION["user"] = "pelanggan";
   
         header("Location: dashboard-pembeli.php");
         exit;

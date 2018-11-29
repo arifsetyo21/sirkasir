@@ -10,6 +10,8 @@ $result = mysqli_query($conn, "SELECT * FROM penjual WHERE id_penjual = '$id_pen
 
 $penjual = mysqli_fetch_assoc($result);
 
+} else {
+  header("Location: login.php");
 }
 
  ?>
@@ -50,7 +52,7 @@ $penjual = mysqli_fetch_assoc($result);
      </div>
      <div class="navbar-end">
       <div class="navbar-item">
-       <a class="button is-danger" href="">Logout</a>
+       <a class="button is-danger" href="functionLogout.php">Logout</a>
       </div>
      </div>
     </div>

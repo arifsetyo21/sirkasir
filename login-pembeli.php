@@ -1,3 +1,45 @@
+<?php 
+session_start();
+require 'functions.php';
+
+if (isset($_POST["login"])) {
+
+  $username = htmlspecialchars($_POST["username"]);
+  $password = htmlspecialchars($_POST["password"]);
+  $login    = htmlspecialchars($_POST["login"]);
+  
+  $result = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '$username'");
+  // var_dump($result);
+
+  if ( mysqli_num_rows($result)) {
+    
+    //cek password
+    $row = mysqli_fetch_assoc($result);
+    if ($password == $row["password"]) {
+      $id_pelanggan = $row["id_pelanggan"];
+      $_SESSION["login"] = true;
+      $_SESSION["id_pelanggan"] = $id_pelanggan;
+  
+        header("Location: dashboard-pembeli.php");
+        exit;
+      } else {
+      echo "<script>
+          alert('password tidak cocok');
+            </script>";
+        header("Location: login-pembeli.php");
+        exit;
+      }
+    } else {
+      echo "<script>
+      alert('username tidak ditemukan');
+      </script>";
+      header("Location: login-pembeli.php");
+    }
+  
+    
+}
+
+ ?>
 <!DOCTYPE html>
 <html>
 
@@ -43,11 +85,10 @@
 
       <div class="tab-content">
        <div class="tab-pane is-active" id="pane-1" class="level">
-        <form action="">
-
+        <form action="" method="post">
          <div class="field">
           <div class="control has-icons-left has-icons-right">
-           <input type="text" class="input" placeholder="Meja" autofocus>
+           <input type="text" class="input" placeholder="Meja" autofocus name="meja">
            <span class="icon is-medium">
             <i class="fa fa-th-large"></i>
            </span>
@@ -56,7 +97,7 @@
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="text" class="input" placeholder="User ID" autofocus>
+           <input type="text" class="input" placeholder="User ID" autofocus name="username">
            <span class="icon is-medium is-left">
             <i class="fa fa-user"></i>
            </span>
@@ -65,7 +106,7 @@
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="password" class="input" placeholder="Password">
+           <input type="password" class="input" placeholder="Password" name="password">
            <span class="icon is-medium is-left">
             <i class="fa fa-lock"></i>
            </span>
@@ -73,18 +114,18 @@
          </div>
 
          <div class="field">
-          <button class="button is-block is-info is-fullwidth">Login</button>
+          <button class="button is-block is-info is-fullwidth" name="login">Login</button>
          </div>
 
         </form>
        </div>
 
        <div class="tab-pane" id="pane-2">
-        <form action="">
+        <form action="" method="post">
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="text" class="input" placeholder="User ID" autofocus>
+           <input type="text" class="input" placeholder="User ID" autofocus name="username">
            <span class="icon is-medium is-left">
             <i class="fa fa-user"></i>
            </span>
@@ -93,7 +134,7 @@
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="password" class="input" placeholder="Password">
+           <input type="password" class="input" placeholder="Password" name="password">
            <span class="icon is-medium is-left">
             <i class="fa fa-lock"></i>
            </span>
@@ -101,7 +142,7 @@
          </div>
 
          <div class="field">
-          <button class="button is-block is-info is-fullwidth">Login</button>
+          <button class="button is-block is-info is-fullwidth" name="login">Login</button>
          </div>
 
         </form>

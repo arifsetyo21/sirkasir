@@ -64,10 +64,14 @@ if (isset($_POST["login"])) {
    <div class="container has-text-centered">
 
     <div class="column is-4 is-offset-4">
+
+    <div style="padding:25px">
+      <img src="assets/img/logo.png" alt="">
+     </div>
      
      <div class="box">
-      <h3 class="title has-text-grey">Login</h3>
-      <p class="subtitle has-text-grey">Login to Proceed.</p>
+      <h3 class="title has-text-grey is-1">Sign In</h3>
+      <p class="subtitle has-text-grey is-3">For Our Employee</p>
       
       <form action="" method="post">
 

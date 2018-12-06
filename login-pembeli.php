@@ -56,7 +56,7 @@ if (isset($_POST["login"])) {
   <div class="hero-body is-paddingless">
    <div class="container has-text-centered">
 
-    <div class="column is-4 is-offset-4">
+    <div class="column is-full-mobile is-half-desktop">
      
      <div style="padding:25px">
       <img src="assets/img/logo.png" alt="">

@@ -89,87 +89,63 @@ if ($_SESSION["login"]) {
 
     <div class="column is-10">
     
-    <div class="columns is-marginless">
+    <div class="columns is-marginless is-center">
         <div class="column is-3" style="padding:0px;">
             <input type="text" class="input" placeholder="Masukkan No Order....">
         </div>
         <div class="column is-2" style="padding:0px;">
-            <button class="button  is-success" style="margin-left:5px;">Proses</button>
+            <button class="button is-success" style="margin-left:5px;">Proses</button>
         </div>
     </div>
     
 
      <div class="box content is-fullwidth" style="margin-top:5px;">
       <div class="pesanan">
-       <table>
+       <table class="is-fullwidth">
         <thead>
-         <tr><th>#</th><th>Pesanan</th><th>Harga</th><th class="" colspan="3">Jumlah</th><th>Subtotal</th></tr>
+         <tr><th>#</th><th>Pesanan</th><th>Harga Satuan</th><th colspan="3">Jumlah</th><th>Subtotal</th></tr>
         </thead>
         <tbody>
         <tr>
             <td>1</td>
             <td>Tahu Kupat</td>
             <td>10k</td>
-            <td><button class="button is-small is-success" style="margin-right:20px;"><i class="fas fa-plus-square"></i></button></td>
+            <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
             <td>100</td>
-            <td><button class="button is-small is-success" style="margin-left:20px;"><i class="fas fa-minus-square"></i></button></td>
-            <td>20k</td>
+            <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
+            <td class="has-text-right">100k</td>
         </tr>
         <tr>
             <td>1</td>
             <td>Tahu Kupat</td>
             <td>10k</td>
-            <td><button class="button is-small is-success" style="margin-right:20px;"><i class="fas fa-plus-square"></i></button></td>
+            <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
             <td>100</td>
-            <td><button class="button is-small is-success" style="margin-left:20px;"><i class="fas fa-minus-square"></i></button></td>
-            <td>20k</td>
+            <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
+            <td class="has-text-right">100k</td>
         </tr>
         <tr>
             <td>1</td>
             <td>Tahu Kupat</td>
             <td>10k</td>
-            <td><button class="button is-small is-success" style="margin-right:20px;"><i class="fas fa-plus-square"></i></button></td>
+            <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
             <td>100</td>
-            <td><button class="button is-small is-success" style="margin-left:20px;"><i class="fas fa-minus-square"></i></button></td>
-            <td>20k</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Tahu Kupat</td>
-            <td>10k</td>
-            <td><button class="button is-small is-success" style="margin-right:20px;"><i class="fas fa-plus-square"></i></button></td>
-            <td>100</td>
-            <td><button class="button is-small is-success" style="margin-left:20px;"><i class="fas fa-minus-square"></i></button></td>
-            <td>20k</td>
+            <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
+            <td class="has-text-right">100k</td>
         </tr>
         </tbody>
         <tfoot>
             <tr>
-                <th class="noborderbottom"></th>
-                <th class="noborderbottom"></th>
-                <th class="noborderbottom"></th>
-                <th class="noborderbottom"></th>
-                <th class="noborderbottom"></th>
-                <th class="noborderbottom">TOTAL : </th>
-                <th class="noborderbottom">100K</th>
+                <th class="has-text-right" colspan="6">TOTAL : </th>
+                <th class="has-text-right">100.000</th>
             </tr>
             <tr>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop">BAYAR : </th>
-                <th style="max-width:100px;" class="noborderbottom nobordertop"><input type="text" class="input"></th>
+                <th class="no-border has-text-right" colspan="6">BAYAR : </th>
+                <th style="max-width:100px;padding:0" class="no-border"><input type="text" class="input has-text-right has-text-weight-bold"></th>
             </tr>
             <tr>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop"></th>
-                <th class="noborderbottom nobordertop">KEMBALIAN : </th>
-                <th class="noborderbottom nobordertop">100K</th>
+                <th class="no-border has-text-right" colspan="6">KEMBALIAN : </th>
+                <th class="no-border has-text-right">100.000</th>
             </tr>
         </tfoot>
        </table>

@@ -43,11 +43,10 @@ aside.sidebar, div.content {
  margin: 20px 0
 }
 
-th.noborderbottom{
-    border-bottom: 0px;
-    border-width: 0px;
+th.no-border {
+ border:none!important
 }
-th.nobordertop{
-    border-top: 0px;
-    border-width: 0px;
+tfoot {
+ border-width: 2px 0 0;
+ color: #363636
 }

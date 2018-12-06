@@ -27,9 +27,10 @@ require 'functions.php';
 <head>
     <meta charset="UTF-8">
     <title>bulma cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css'>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel='stylesheet prefetch' href='assets/css/bulma.min.css'>
+    <script src="assets/js/all.js"></script>
     <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
     <link rel="stylesheet" href="assets/css/card-dashboard-pembeli.css">
 
@@ -115,7 +116,7 @@ require 'functions.php';
             </div>
         </footer>
 
-            <script src="../js/bulma.js"></script>
+            <script src="assets/js/bulma.js"></script>
 
 
 </body>

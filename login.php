@@ -90,7 +90,7 @@ if (isset($_POST["login"])) {
      
      <div class="box">
       <p class="title is-1">Sign In</p>
-      <p class="subtitle is-3">for our seller & employee</p>
+      <p class="subtitle is-4">for our seller & employee</p>
       <div class="tab-content">
        <div class="tab-pane is-active" id="pane-1" class="level">
         <form action="" method="post">

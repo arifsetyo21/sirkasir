@@ -91,11 +91,14 @@ if ($_SESSION["login"]) {
     
     <div class="columns is-marginless is-center">
         <div class="column is-3" style="padding:0px;">
-            <input type="text" class="input" placeholder="Masukkan No Order....">
+            <form action="" method="POST" name="">
+            <input type="text" class="input" placeholder="Masukkan No Order...." name="order">
+            
         </div>
         <div class="column is-2" style="padding:0px;">
-            <button class="button is-success" style="margin-left:5px;">Proses</button>
+            <button class="button is-success" style="margin-left:5px;" name="proses">Proses</button>
         </div>
+        </form>
     </div>
     
 
@@ -106,33 +109,26 @@ if ($_SESSION["login"]) {
          <tr><th>#</th><th>Pesanan</th><th>Harga Satuan</th><th colspan="3">Jumlah</th><th>Subtotal</th></tr>
         </thead>
         <tbody>
+        <?php
+            if (isset($_POST["proses"])){
+                $order=$_POST['order'];
+                $query1= mysqli_query($conn, "SELECT p.id_pesanan,m.id_makanan,m.harga,m.nama,ip.jumlah,ip.subtotal FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan = '$order'");
+                $i=1;
+                while ($record = mysqli_fetch_array($query1)){
+        ?>
         <tr>
-            <td>1</td>
-            <td>Tahu Kupat</td>
-            <td>10k</td>
+            <td><?php echo $i?></td>
+            <td><?php echo $record['nama']?></td>
+            <td><?php echo $record['harga']?></td>
             <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
-            <td>100</td>
+            <td><?php echo $record['jumlah']?></td>
             <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
-            <td class="has-text-right">100k</td>
+            <td class="has-text-right"><?php echo $record['subtotal']?></td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Tahu Kupat</td>
-            <td>10k</td>
-            <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
-            <td>100</td>
-            <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
-            <td class="has-text-right">100k</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Tahu Kupat</td>
-            <td>10k</td>
-            <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
-            <td>100</td>
-            <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
-            <td class="has-text-right">100k</td>
-        </tr>
+        <?php
+            }
+        }
+        ?>
         </tbody>
         <tfoot>
             <tr>

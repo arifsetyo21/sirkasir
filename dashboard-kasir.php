@@ -3,10 +3,18 @@ session_start();
 
 require 'functions.php';
 
-if ($_SESSION["login"]="login") {
-$id_karyawan = $_SESSION["id_karyawan"];
-$result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
-$id_karyawan = mysqli_fetch_assoc($result);
+if ($_SESSION["login"]) {
+    if(isset($_SESSION["user"]) && $_SESSION["user"] == "kasir"){
+        $id_karyawan = $_SESSION["id_karyawan"];
+        $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
+        $id_karyawan = mysqli_fetch_assoc($result);
+    } else {
+        header("Location: login.php");
+        exit;
+    }
+} else {
+    header("Location: login.php");
+    exit;
 }
 
 ?>
@@ -45,7 +53,7 @@ $id_karyawan = mysqli_fetch_assoc($result);
      </div>
      <div class="navbar-end">
       <div class="navbar-item">
-       <a class="button is-danger" href="functionsLogout.php">Logout</a>
+       <a class="button is-danger" href="logout.php">Logout</a>
       </div>
      </div>
     </div>

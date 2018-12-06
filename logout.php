@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_SESSION["user"] == "pelanggan") {
+if ($_SESSION["user"] == "pembeli") {
         $page = "Location: login-pembeli.php";
 } else {
         $page = "Location: login.php";

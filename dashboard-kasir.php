@@ -4,11 +4,17 @@ session_start();
 require 'functions.php';
 
 if ($_SESSION["login"]) {
-    $id_karyawan = $_SESSION["id_karyawan"];
-    $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
-    $id_karyawan = mysqli_fetch_assoc($result);
+    if(isset($_SESSION["user"]) && $_SESSION["user"] == "kasir"){
+        $id_karyawan = $_SESSION["id_karyawan"];
+        $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
+        $id_karyawan = mysqli_fetch_assoc($result);
+    } else {
+        header("Location: login.php");
+        exit;
+    }
 } else {
     header("Location: login.php");
+    exit;
 }
 
 ?>

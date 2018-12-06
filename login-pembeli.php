@@ -19,7 +19,7 @@ if (isset($_POST["login"])) {
       $id_pelanggan = $row["id_pelanggan"];
       $_SESSION["login"] = true;
       $_SESSION["id_pelanggan"] = $id_pelanggan;
-      $_SESSION["user"] = "pelanggan";
+      $_SESSION["user"] = "pembeli";
   
         header("Location: dashboard-pembeli.php");
         exit;
@@ -27,14 +27,11 @@ if (isset($_POST["login"])) {
       echo "<script>
           alert('password tidak cocok');
             </script>";
-        header("Location: login-pembeli.php");
-        exit;
       }
     } else {
       echo "<script>
       alert('username tidak ditemukan');
       </script>";
-      header("Location: login-pembeli.php");
     }
   
     

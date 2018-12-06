@@ -14,20 +14,21 @@ if (isset($_POST["login"])) {
 
   if ( mysqli_num_rows($result[0])) {
     
-    //cek password
+    //cek password karyawan
     $row = mysqli_fetch_assoc($result[0]);
     if ($password == $row["password"]) {
       $id_karyawan = $row["id_karyawan"];
       $_SESSION["login"] = true;
       $_SESSION["id_karyawan"] = $id_karyawan;
+      $_SESSION["user"] = $row["bagian"];
   
-      if ($row["bagian"] == "kasir") {
+      if ($_SESSION["user"] == "kasir") {
         header("Location: dashboard-kasir.php");
         exit;
-      } elseif ( $row["bagian"] == "petugas") {
+      } elseif ( $_SESSION["user"] == "petugas") {
         header("Location: petugas.php");
         exit;   
-      } elseif ($row["bagian"] == "admin") {
+      } elseif ($_SESSION["user"] == "admin") {
         header("Location: admin.php");
         exit;
       } else {
@@ -40,12 +41,13 @@ if (isset($_POST["login"])) {
       </script>";
     } 
   } elseif ( mysqli_num_rows($result[1]) ) {
+    // cek password penjual
     $row = mysqli_fetch_assoc($result[1]);
     if ($password == $row["password"]) {
       $id_penjual = $row["id_penjual"];
       $_SESSION["login"] = true;
       $_SESSION["id_penjual"] = $id_penjual;
-      $_SESSION["user"] = "employe";
+      $_SESSION["user"] = "penjual";
 
       header("Location: dashboard-penjual.php");
       }else {
@@ -95,7 +97,7 @@ if (isset($_POST["login"])) {
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="text" class="input" placeholder="User ID" autofocus name="username">
+           <input type="text" class="input" placeholder="User ID" autofocus name="username" required>
            <span class="icon is-medium is-left">
             <i class="fa fa-user"></i>
            </span>
@@ -104,7 +106,7 @@ if (isset($_POST["login"])) {
 
          <div class="field">
           <div class="control has-icons-left">
-           <input type="password" class="input" placeholder="Password" name="password">
+           <input type="password" class="input" placeholder="Password" name="password" required>
            <span class="icon is-medium is-left">
             <i class="fa fa-lock"></i>
            </span>

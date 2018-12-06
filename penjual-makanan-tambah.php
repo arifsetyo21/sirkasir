@@ -9,6 +9,17 @@ if ($_SESSION["login"]) {
     $result = mysqli_query($conn, "SELECT * FROM penjual WHERE id_penjual = '$id_penjual'");
 
     $penjual = mysqli_fetch_assoc($result);
+    
+    if (isset($_POST["tambah"])) {
+      if( tambah($_POST) > 0){
+         echo "data berhasil ditambahkan";
+         header("Location: penjual-makanan.php");
+      } else {
+         echo "data gagal ditambahkan";
+      }
+    }
+    
+
   } else {
     header("Location: login.php");
   }
@@ -50,7 +61,7 @@ if ($_SESSION["login"]) {
      <div class="navbar-start">
       <div class="navbar-item">
        <a class="navbar-item" href="">Home</a>
-       <a class="navbar-item" href="penjual-makanan.php">Makanan</a>
+       <a class="navbar-item" href="">Makanan</a>
       </div>
      </div>
      <div class="navbar-end">
@@ -88,22 +99,41 @@ if ($_SESSION["login"]) {
 
      </aside>
     </div>
-
     <div class="column is-10">
-
+    <div class="level">
+      <h2 class="title is-2 level-left">Tambah Makanan</h2>
+    </div>
      <div class="box content is-fullwidth">
       <div class="pesanan">
-       <table style="100%">
-        <thead>
-         <tr><th>#</th><th>Pesanan</th><th>Jumlah</th><th>Meja</th><th>Aksi</th></tr>
-        </thead>
-        <tbody>
-         <tr><td>1</td><td>Tahu Kupat</td><td>10</td><td>5</td><td><button class="button is-small is-success"><i class="fas fa-check"></i></button></td></tr>
-         <tr><td>2</td><td>Mie Ayam</td><td>10</td><td>5</td><td><button class="button is-small is-success"><i class="fas fa-check"></i></button></td></tr>
-         <tr><td>3</td><td>Good Day</td><td>10</td><td>5</td><td><button class="button is-small is-success"><i class="fas fa-check"></i></button></td></tr>
-         <tr><td>4</td><td>Mie Dok Dok</td><td>10</td><td>5</td><td><button class="button is-small is-success"><i class="fas fa-check"></i></button></td></tr>
-        </tbody>
-       </table>
+       <form action="" method="post" enctype="multipart/form-data">
+         <ul>
+            <input type="text" name="id" hidden>
+            <input type="text" name="id_penjual" value="<?= $id_penjual?>" hidden> 
+            <li>
+               <label for="gambar">Foto Makanan </label>
+               <input type="file" name="gambar" id="gambar">
+            </li>
+            <li>
+               <label for="nama">Nama </label>
+               <input type="text" name="nama" id="nama" required>
+            </li>
+            <li>
+               <label for="harga">Harga </label>
+               <input type="text" name="harga" id="harga" required>
+            </li>
+            <li>
+               <label for="stok">Stok </label>
+               <input type="number" name="stok" id="stok" required>
+            </li>
+            <li>
+               <label for="desc">Deskripsi </label>
+               <textarea name="desc" id="desc" required> </textarea>
+            </li>
+            <li>
+               <button type="submit" name="tambah">Tambah</button>
+            </li>
+         </ul>
+       </form>
       </div>
      </div>
 

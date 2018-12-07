@@ -28,6 +28,7 @@ if ($_SESSION["login"]) {
  <link rel="stylesheet" href="assets/css/bulma.min.css" />
  <link rel="stylesheet" href="assets/css/style.css" />
  <script defer src="assets/js/all.js"></script>
+ <script src="assets/js/angular.min.js"></script>
 </head>
 
 <body>
@@ -113,36 +114,47 @@ if ($_SESSION["login"]) {
             if (isset($_POST["proses"])){
                 $order=$_POST['order'];
                 $query1= mysqli_query($conn, "SELECT p.id_pesanan,m.id_makanan,m.harga,m.nama,ip.jumlah,ip.subtotal FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan = '$order'");
-                $i=1;
+                $query2= mysqli_query($conn, "SELECT SUM(ip.subtotal) AS total FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan ='$order' ");
+                $i=0;
+                $record2= mysqli_fetch_array($query2);
+                $total= number_format($record2['total']);
                 while ($record = mysqli_fetch_array($query1)){
         ?>
         <tr>
+            <?php
+                $i=$i+1;
+                $harga= number_format($record['harga']);
+                $subtotal= number_format($record['subtotal']);
+            ?>
             <td><?php echo $i?></td>
-            <td><?php echo $record['nama']?></td>
-            <td><?php echo $record['harga']?></td>
+            <td><?php echo $record['nama'];?></td>
+            <td><?php echo $harga;?></td>
             <td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
-            <td><?php echo $record['jumlah']?></td>
+            <td><?php echo $record['jumlah'];?></td>
             <td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
-            <td class="has-text-right"><?php echo $record['subtotal']?></td>
+            <td class="has-text-right"><?php echo $subtotal;?></td>
         </tr>
         <?php
             }
-        }
         ?>
         </tbody>
-        <tfoot>
+        <tfoot ng-app="kembalianApp" ng-controller="kembalianCtrl">
             <tr>
                 <th class="has-text-right" colspan="6">TOTAL : </th>
-                <th class="has-text-right">100.000</th>
+                <th class="has-text-right" ><p ng-model="total" ng-init="total='<?php echo $record2['total'];?>'"><?php echo $total;?></p></th>
             </tr>
             <tr>
                 <th class="no-border has-text-right" colspan="6">BAYAR : </th>
-                <th style="max-width:100px;padding:0" class="no-border"><input type="text" class="input has-text-right has-text-weight-bold"></th>
+                <th style="max-width:100px;padding:0" class="no-border"><input type="text" class="input has-text-right has-text-weight-bold" ng-model="bayar"></th>
             </tr>
             <tr>
                 <th class="no-border has-text-right" colspan="6">KEMBALIAN : </th>
-                <th class="no-border has-text-right">100.000</th>
+                <th class="no-border has-text-right">{{kembalian()}}</th>
             </tr>
+            
+            <?php
+            }
+            ?>
         </tfoot>
        </table>
       </div>
@@ -158,6 +170,18 @@ if ($_SESSION["login"]) {
   </div>
 </body>
 
+<script>
+var app = angular.module('kembalianApp', []);
+app.controller('kembalianCtrl', function($scope) {
+    $scope.kembalian = function() {
+        if(parseInt($scope.bayar-$scope.total) >=0){
+        return $scope.result= parseInt($scope.bayar)-parseInt($scope.total);
+        }else{
+        return $scope.result='-';
+        }
+    };
+});
+</script>
 <script src="assets/js/bulma.js"></script>
 
 </html>

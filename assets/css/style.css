@@ -72,3 +72,11 @@ figure.tokos img {
  border-radius: 5px;
  border: 2px solid #fff
 }
+
+/* Dasboard Kasir */
+.no-pesan {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: bold!important
+}

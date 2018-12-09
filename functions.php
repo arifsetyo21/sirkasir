@@ -18,15 +18,14 @@ function query($query) {
 function tambah($data) {
 	global $conn;
 
-	$id = $data["id"];
 	$id_penjual = $data["id_penjual"];
 	$nama = $data["nama"];
 	$harga = $data["harga"];
 	$stock = $data["stok"];
-	$desc = $data["desc"];
+	$deskripsi = $data["deskripsi"];
 	$gambar = upload();
 
-	$query = "INSERT INTO makanan VALUES ('', '$nama', '$harga', '$stock', '$gambar', '$id_penjual', '$desc')";
+	$query = "INSERT INTO makanan VALUES ('', '$nama', '$harga', '$stock', '$gambar', '$id_penjual', '$deskripsi')";
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
@@ -86,4 +85,33 @@ function hapus($data) {
 	return mysqli_affected_rows($conn);
 }
 
- ?>
+function ubah($data) {
+	global $conn;
+
+	$id_makanan = htmlspecialchars($data["id_makanan"]);
+	$id_penjual = htmlspecialchars($data["id_penjual"]);
+	$nama = htmlspecialchars($data["nama"]);
+	$harga = htmlspecialchars($data["harga"]);
+	$stok = htmlspecialchars($data["stok"]);
+	$deskripsi = htmlspecialchars($data["deskripsi"]);
+	$gambarLama = htmlspecialchars($data["gambarLama"]);
+
+	if ( $_FILES["gambar"]["error"] === 4 ) {
+		$gambar = $gambarLama;
+	} else {
+		$gambar = upload();
+	}
+
+	$query =  "UPDATE makanan SET
+				nama = '$nama',
+				harga = '$harga',
+				stok = '$stok',
+				deskripsi = '$deskripsi',
+				gambar = '$gambar'
+				WHERE id_makanan = '$id_makanan'";
+	
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+
+}

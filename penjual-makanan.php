@@ -31,7 +31,7 @@ if ($_SESSION["login"]) {
 <head>
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Dashboard!</title>
+ <title>Makanan</title>
  <link rel="stylesheet" href="assets/css/bulma.min.css" />
  <link rel="stylesheet" href="assets/css/style.css" />
  <script defer src="assets/js/all.js"></script>
@@ -114,10 +114,10 @@ if ($_SESSION["login"]) {
           <td><?= $i?></td>
           <td><img src="assets/img/makanan/<?= $makanan["gambar"]?>" alt="" style="width:70px"></td>
           <td><?= $makanan["nama"]?></td>
-          <td><?= $makanan["desc"]?></td>
+          <td><?= $makanan["deskripsi"]?></td>
           <td><?= $makanan["harga"]?></td>
           <td>
-            <a href="penjual-makanan-edit.php?id_makanan=<?= $makanan['id_makanan'] ?>"><button class="button is-small is-warning"><i class="fas fa-pencil-alt"></i></button></a>
+            <a href="penjual-makanan-ubah.php?id_makanan=<?= $makanan['id_makanan'] ?>"><button class="button is-small is-warning"><i class="fas fa-pencil-alt"></i></button></a>
             <button  onclick="del('<?= $id_makanan?>')" class="button is-small is-danger" ><i class="fas fa-trash-alt"></i></button>
           </td>
          </tr>

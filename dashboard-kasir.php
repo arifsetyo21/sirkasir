@@ -28,7 +28,10 @@ if ($_SESSION["login"]) {
  <link rel="stylesheet" href="assets/css/bulma.min.css" />
  <link rel="stylesheet" href="assets/css/style.css" />
  <script defer src="assets/js/all.js"></script>
- <script defer src="assets/js/angular.min.js"></script>
+ <script src="assets/js/angular.min.js"></script>
+ <script src="assets/js/jquery-3.3.1.min.js"></script>
+ <script src="assets/js/editmenukasir.js"></script>
+ 
 </head>
 
 <body>
@@ -107,8 +110,8 @@ if ($_SESSION["login"]) {
 	
 
 	 <div class="box content" style="margin-top:5px;">
-	  <div class="pesanan">
-	   <table class=""">
+	  <div class="pesanan" id="containerpesanan">
+	   <table class="">
 		<thead>
 		 <tr><th>#</th><th>Pesanan</th><th>Harga Satuan</th><th colspan="3">Jumlah</th><th>Subtotal</th></tr>
 		</thead>
@@ -121,24 +124,33 @@ if ($_SESSION["login"]) {
 				$i=0;
 				$record2= mysqli_fetch_array($query2);
 				$total= number_format($record2['total']);
-				while ($record = mysqli_fetch_array($query1)){
+				while ($record = mysqli_fetch_assoc($query1)){
+					$records[] = $record;
+				}
 		?>
+
+		<?php foreach ($records as $r) : ?>
 		<tr>
 			<?php
 				$i=$i+1;
-				$harga= number_format($record['harga']);
-				$subtotal= number_format($record['subtotal']);
+				
+				$harga= number_format($r['harga']);
+				$subtotal= number_format($r['subtotal']);
 			?>
 			<td><?php echo $i?></td>
-			<td><?php echo $record['nama'];?></td>
+			<td><?php echo $r['nama'];?></td>
 			<td><?php echo $harga;?></td>
-			<td><button class="button is-small is-success"><i class="fas fa-minus-square"></i></button></td>
-			<td><?php echo $record['jumlah'];?></td>
-			<td><button class="button is-small is-success"><i class="fas fa-plus-square"></i></button></td>
+			<td>
+				<button class="button is-small is-success kurang" name="kurang" id="btn_kurang" data-id_pesanan="<?php echo htmlspecialchars($r['id_pesanan']); ?>" data-id_makanan="<?php echo htmlspecialchars($r['id_makanan']); ?>" data-jumlah="<?php echo htmlspecialchars($r['jumlah']); ?>"><i class="fas fa-minus-square"></i></button>
+			</td>
+			<td><?php echo $r['jumlah'];?></td>
+			<td>
+				<button class="button is-small is-success tambah" name="tambah" id="btn_tambah" data-id_pesanan="<?php echo htmlspecialchars($r['id_pesanan']); ?>" data-id_makanan="<?php echo htmlspecialchars($r['id_makanan']); ?>" data-jumlah="<?php echo htmlspecialchars($r['jumlah']); ?>"><i class="fas fa-plus-square"></i></button>
+			</td>
 			<td class="has-text-right"><?php echo $subtotal;?></td>
 		</tr>
 		<?php
-			}
+			endforeach;
 		?>
 		</tbody>
 		<tfoot ng-app="kembalianApp" ng-controller="kembalianCtrl">
@@ -156,6 +168,7 @@ if ($_SESSION["login"]) {
 			</tr>
 			
 			<?php
+			
 			}
 			?>
 		</tfoot>

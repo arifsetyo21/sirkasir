@@ -113,5 +113,55 @@ function ubah($data) {
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
+}
 
+function cart($data) {
+	
+	if (isset($data["act"])) {
+		$act = $data["act"];
+
+		if ($act == "add") {
+			if (isset($data["id_makanan"])) {
+				$id_makanan = $data["id_makanan"];
+				if ($_SESSION["items"][$id_makanan]) {
+					$_SESSION["items"][$id_makanan] += 1;
+				} else {
+					$_SESSION["items"][$id_makanan] = 1;
+				}
+			}
+		} elseif ($act == "min") {
+			if (isset($data["id_makanan"])) {
+				$id_makanan = $data["id_makanan"];
+				if ($_SESSION["items"][$id_makanan]) {
+					$_SESSION["items"][$id_makanan] -= 1;
+				}
+			}
+		} elseif ($act == "plus") {
+			if (isset($data["id_makanan"])) {
+				$id_makanan = $data["id_makanan"];
+				if ($_SESSION['items'][$id_makanan]) {
+						$_SESSION['items'][$id_makanan] += 1;
+				}
+			}
+		} elseif ($act == "hapus") {
+			if (isset($data["id_makanan"])) {
+				$id_makanan = $data["id_makanan"];
+				if ($_SESSION['items'][$id_makanan]) {
+						unset($_SESSION['items'][$id_makanan]);
+				}
+			}
+		} elseif ($act == "clear") {
+			if (isset($data["id_makanan"])) {
+				$id_makanan = $data["id_makanan"];
+				if (isset($_SESSION['items'])) {
+					foreach ($_SESSION['items'] as $items) {
+						unset($_SESSION['items'][$items]);
+					}
+						unset($_SESSION['items']);
+				}
+			}
+		}
+
+	}
+	
 }

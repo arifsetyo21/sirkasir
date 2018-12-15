@@ -32,5 +32,17 @@ $(document).ready(function(){
         });
 
     });
+
+    $('#bayar').on('keyup', function(){
+        var total = $('#totalharga').data('total');
+        var bayar = $(this).val();
+        total = parseInt(total);
+        bayar = parseInt(bayar);
+        var kembalian = bayar-total;
+        if(kembalian<0){
+            kembalian='-';
+        }
+        $('#hasilkembalian').html(kembalian);
+    });
     
 });

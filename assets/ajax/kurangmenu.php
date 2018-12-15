@@ -52,33 +52,21 @@
 		<tfoot ng-app="kembalianApp" ng-controller="kembalianCtrl">
 			<tr>
 				<th class="has-text-right" colspan="6">TOTAL : </th>
-				<th class="has-text-right" ><p ng-model="total" ng-init="total='<?php echo $record2['total'];?>'"><?php echo $total;?></p></th>
+				<th class="has-text-right" ><p id="totalharga" ng-model="total" ng-init="total='<?php echo $record2['total'];?>'" data-total="<?php echo htmlspecialchars($record2['total']); ?>"><?php echo $total;?></p></th>
 			</tr>
 			<tr>
 				<th class="no-border has-text-right" colspan="6">BAYAR : </th>
-				<th style="max-width:100px;padding:0" class="no-border"><input type="text" class="input has-text-right has-text-weight-bold" ng-model="bayar"></th>
+				<th style="max-width:100px;padding:0" class="no-border"><input type="text" id="bayar" class="input has-text-right has-text-weight-bold" ng-model="bayar"></th>
 			</tr>
 			<tr>
+				<div id="containerkembalian">
 				<th class="no-border has-text-right" colspan="6">KEMBALIAN : </th>
-				<th class="no-border has-text-right">{{kembalian()}}</th>
+				<th class="no-border has-text-right"><p id="hasilkembalian">-</p></th>
+				</div>
 			</tr>
 			
 		</tfoot>
 	   </table>
-            <?php var_dump($record2['total']);?>
-      
-    <script>
-    var app = angular.module('kembalianApp', []);
-    app.controller('kembalianCtrl', function($scope) {
-        $scope.kembalian = function() {
-            if(parseInt($scope.bayar-$scope.total) >=0){
-            return $scope.result= parseInt($scope.bayar)-parseInt($scope.total);
-            }else{
-            return $scope.result='-';
-            }
-        };
-    });
-</script>
 
     <script src="assets/js/editmenukasir.js"></script>
 

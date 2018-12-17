@@ -118,50 +118,58 @@ function ubah($data) {
 function cart($data) {
 	
 	if (isset($data["act"])) {
-		$act = $data["act"];
+		$act = $_GET["act"];
 
 		if ($act == "add") {
-			if (isset($data["id_makanan"])) {
-				$id_makanan = $data["id_makanan"];
-				if ($_SESSION["items"][$id_makanan]) {
-					$_SESSION["items"][$id_makanan] += 1;
+			if (isset($_GET["id_makanan"])) {
+				$id_makanan = $_GET["id_makanan"];
+				if ($_SESSION['items'][$id_makanan]["jumlah"] != 0) {
+						$_SESSION['items'][$id_makanan]["jumlah"] += 1;
 				} else {
-					$_SESSION["items"][$id_makanan] = 1;
+						$_SESSION["items"][$id_makanan]["jumlah"] = 1;
 				}
 			}
 		} elseif ($act == "min") {
-			if (isset($data["id_makanan"])) {
-				$id_makanan = $data["id_makanan"];
-				if ($_SESSION["items"][$id_makanan]) {
-					$_SESSION["items"][$id_makanan] -= 1;
+			if (isset($_GET["id_makanan"])) {
+				$id_makanan = $_GET["id_makanan"];
+				if ($_SESSION["items"][$id_makanan]["jumlah"]) {
+						$_SESSION["items"][$id_makanan]["jumlah"] -= 1;
 				}
 			}
 		} elseif ($act == "plus") {
-			if (isset($data["id_makanan"])) {
-				$id_makanan = $data["id_makanan"];
-				if ($_SESSION['items'][$id_makanan]) {
-						$_SESSION['items'][$id_makanan] += 1;
+			if (isset($_GET["id_makanan"])) {
+				$id_makanan = $_GET["id_makanan"];
+				if ($_SESSION['items'][$id_makanan]["jumlah"] !== 0) {
+						$_SESSION['items'][$id_makanan]["jumlah"] += 1;
+				} elseif ($_SESSION['items'][$id_makanan]["jumlah"] === 0) {
+						$_SESSION['items'][$id_makanan]["jumlah"] = 1;
 				}
 			}
 		} elseif ($act == "hapus") {
-			if (isset($data["id_makanan"])) {
-				$id_makanan = $data["id_makanan"];
-				if ($_SESSION['items'][$id_makanan]) {
-						unset($_SESSION['items'][$id_makanan]);
+			if (isset($_GET["id_makanan"])) {
+				$id_makanan = $_GET["id_makanan"];
+				if ($_SESSION['items'][$id_makanan]["jumlah"]) {
+							unset($_SESSION['items'][$id_makanan]["jumlah"]);
 				}
 			}
 		} elseif ($act == "clear") {
-			if (isset($data["id_makanan"])) {
-				$id_makanan = $data["id_makanan"];
+			if (isset($_GET["id_makanan"])) {
+				$id_makanan = $_GET["id_makanan"];
 				if (isset($_SESSION['items'])) {
-					foreach ($_SESSION['items'] as $items) {
-						unset($_SESSION['items'][$items]);
-					}
-						unset($_SESSION['items']);
+						foreach ($_SESSION['items'] as $items) {
+							unset($_SESSION['items'][$items]);
+						}
+							unset($_SESSION['items']);
 				}
 			}
 		}
 
 	}
 	
+}
+
+function order() {
+	while($i = $_SESSION["items"]){
+		$items[] = $i;
+	}
 }

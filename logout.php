@@ -8,5 +8,6 @@ if ($_SESSION["user"] == "pembeli") {
 }
         session_unset();
         session_destroy();
+        
         header($page);
 ?>

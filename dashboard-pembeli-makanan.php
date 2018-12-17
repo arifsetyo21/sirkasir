@@ -1,6 +1,6 @@
 <?php 
 session_start();
-
+error_reporting(0);
 require 'functions.php';
 
    if ($_SESSION["login"]) {
@@ -13,8 +13,14 @@ require 'functions.php';
             $id_penjual = $_GET["id_penjual"];
 
             $makanan = query("SELECT * FROM makanan WHERE id_penjual = '$id_penjual'");
-
-            cart($_GET);
+            
+            if (isset($_GET["act"])) {
+                cart($_GET);
+        
+            }
+            
+            var_dump($_SESSION);
+            // echo "<script> window.location.reload();</script>";
 
       } else {
             header("Location: login-pembeli.php");
@@ -109,7 +115,7 @@ require 'functions.php';
                                        <a href="?id_penjual=<?= $id_penjual?>&amp;act=min&amp;id_makanan=<?php echo $m["id_makanan"]?>" class="button is-small is-success"><i class="fas fa-minus-square"></i></a>
                                     </div>
                                     <div class="column is-half">
-                                       <input type="number" class="input" name="jumlah" min="1" max="<?= $m["stok"]?>" value="<?=$_SESSION["items"][$m['id_makanan']] ?>" id="makanan<?= $i;?>">  
+                                     <input disabled type="number" class="input" name="jumlah" min="1" max="<?= $m["stok"]?>" value="<?php if(!empty($_SESSION["items"][$m["id_makanan"]]) ){ echo $_SESSION["items"][$m["id_makanan"]]["jumlah"]; } else {echo "0";}?>" id="makanan<?= $i;?>">
                                     </div>
                                     <div class="column">
                                        <a href="?id_penjual=<?= $id_penjual?>&amp;act=plus&amp;id_makanan=<?php echo $m["id_makanan"]?>" class="button is-small is-success"><i class="fas fa-plus-square"></i></a>

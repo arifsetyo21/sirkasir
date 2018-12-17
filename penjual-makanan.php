@@ -118,7 +118,8 @@ if ($_SESSION["login"]) {
           <td><?= $makanan["harga"]?></td>
           <td>
             <a href="penjual-makanan-ubah.php?id_makanan=<?= $makanan['id_makanan'] ?>"><button class="button is-small is-warning"><i class="fas fa-pencil-alt"></i></button></a>
-            <button  onclick="del('<?= $id_makanan?>')" class="button is-small is-danger" ><i class="fas fa-trash-alt"></i></button>
+            <!-- <button  onclick="del('<?= $id_makanan?>')" class="button is-small is-danger" ><i class="fas fa-trash-alt"></i></button> -->
+            <a href="penjual-makanan-hapus.php?id_makanan=<?= $makanan['id_makanan'] ?>"><button class="button is-small is-danger" ><i class="fas fa-trash-alt"></i></button></a>
           </td>
          </tr>
         <?php $i++; endforeach; ?>

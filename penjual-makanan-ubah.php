@@ -15,11 +15,11 @@ if ($_SESSION["login"]) {
     if (isset($_POST["ubah"])) {
       if( ubah($_POST) > 0){
          echo "<script>
-               alert('data berhasil ditambahkan');
+               alert('data berhasil diubah');
                window.location.href = 'penjual-makanan.php';
          </script>";
       } else {
-         echo "data gagal ditambahkan";
+         echo "<script>alert('data gagal diubah');</script>";
          echo("Error description: " . mysqli_error($conn));
       }
     }

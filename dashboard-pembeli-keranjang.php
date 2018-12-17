@@ -16,7 +16,7 @@ if ($_SESSION["login"]) {
 		// }
 		// $count = count($_SESSION["items"]);
 		// var_dump($count);
-		var_dump($_GET);
+		// var_dump($_GET);
 		if (isset($_GET["param"])) {
 			//header("Location: dashboard-pembeli-keranjang.php");
 			$total = $_SESSION["total"];
@@ -29,7 +29,7 @@ if ($_SESSION["login"]) {
 			mysqli_query($conn, $query);
 
 			$id_pesanan = (mysqli_fetch_array(mysqli_query($conn, "SELECT id_pesanan as id_pesanan FROM pesanan ORDER BY id_pesanan DESC LIMIT 1")));
-			var_dump($id_pesanan[0]);
+			// var_dump($id_pesanan[0]);
 
 			//insert item_pesanan
 			

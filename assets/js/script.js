@@ -6,7 +6,8 @@ function editMenu() {
 function del(param) {
 
     var conf = confirm('Apakah anda yakin');
+    console.log(param);
     if (conf == true) {
-        window.location.assign('penjual-makanan-hapus.php?id_makanan=' + param);
+        window.location.href = 'penjual-makanan-hapus.php?id_makanan=' + param;
     }
 }

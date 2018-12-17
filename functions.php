@@ -79,7 +79,7 @@ function hapus($data) {
 
 	$id_makanan = $data["id_makanan"];
 
-	$query = "DELETE FROM makanan WHERE id_makanan = '$id_makanan'";
+	$query = "DELETE FROM makanan WHERE id_makanan = 'MK10'";
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);

@@ -19,7 +19,7 @@ require 'functions.php';
         
             }
             
-            var_dump($_SESSION);
+            // var_dump($_SESSION);
             // echo "<script> window.location.reload();</script>";
 
       } else {

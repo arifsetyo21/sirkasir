@@ -29,8 +29,7 @@ if ($_SESSION["login"]) {
  <link rel="stylesheet" href="assets/css/style.css" />
  <script defer src="assets/js/all.js"></script>
  <script src="assets/js/angular.min.js"></script>
- <script src="assets/js/jquery-3.3.1.min.js"></script>
- <script src="assets/js/editmenukasir.js"></script>
+ 
  
 </head>
 
@@ -102,8 +101,13 @@ if ($_SESSION["login"]) {
 		<div class="column is-2">
 			<button class="button is-success is-fullwidth" name="proses">Proses</button>
 		</div>
+		<?php
+			if(isset($_POST["proses"])){
+				$order=$_POST['order'];
+			};
+		?>
 		<div class="column no-pesan">
-			<h1 class="has-text-weight-bold">Pesanan : 456</h1>
+			<h1 class="has-text-weight-bold">Pesanan : <?php echo @$order;?></h1>
 		</div>
 		</form>
 	</div>
@@ -118,7 +122,6 @@ if ($_SESSION["login"]) {
 		<tbody>
 		<?php
 			if (isset($_POST["proses"])){
-				$order=$_POST['order'];
 				$query1= mysqli_query($conn, "SELECT p.id_pesanan,m.id_makanan,m.harga,m.nama,ip.jumlah,ip.subtotal FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan = '$order'");
 				$query2= mysqli_query($conn, "SELECT SUM(ip.subtotal) AS total FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan ='$order' ");
 				$i=0;
@@ -156,15 +159,15 @@ if ($_SESSION["login"]) {
 		<tfoot ng-app="kembalianApp" ng-controller="kembalianCtrl">
 			<tr>
 				<th class="has-text-right" colspan="6">TOTAL : </th>
-				<th class="has-text-right" ><p ng-model="total" ng-init="total='<?php echo $record2['total'];?>'"><?php echo $total;?></p></th>
+				<th class="has-text-right" ><p id="totalharga" ng-model="total" ng-init="total='<?php echo $record2['total'];?>'" data-total="<?php echo htmlspecialchars($record2['total']); ?>"><?php echo $total;?></p></th>
 			</tr>
 			<tr>
 				<th class="no-border has-text-right" colspan="6">BAYAR : </th>
-				<th style="max-width:100px;padding:0" class="no-border"><input type="text" class="input has-text-right has-text-weight-bold" ng-model="bayar"></th>
+				<th style="max-width:100px;padding:0" class="no-border"><input type="text" id="bayar" class="input has-text-right has-text-weight-bold" ng-model="bayar"></th>
 			</tr>
 			<tr>
 				<th class="no-border has-text-right" colspan="6">KEMBALIAN : </th>
-				<th class="no-border has-text-right">{{kembalian()}}</th>
+				<th class="no-border has-text-right"><p id="hasilkembalian">-</p></th>
 			</tr>
 			
 			<?php
@@ -198,6 +201,8 @@ app.controller('kembalianCtrl', function($scope) {
 	};
 });
 </script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+ <script src="assets/js/editmenukasir.js"></script>
 <script src="assets/js/bulma.js"></script>
 
 </html>

@@ -122,6 +122,8 @@ if ($_SESSION["login"]) {
 		<tbody>
 		<?php
 			if (isset($_POST["proses"])){
+				$queryCek= mysqli_query($conn, "SELECT id_pesanan FROM pesanan WHERE id_pesanan='$order' AND status=0");
+				if(mysqli_num_rows($queryCek)==1){
 				$query1= mysqli_query($conn, "SELECT p.id_pesanan,m.id_makanan,m.harga,m.nama,ip.jumlah,ip.subtotal FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan = '$order'");
 				$query2= mysqli_query($conn, "SELECT SUM(ip.subtotal) AS total FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan ='$order' ");
 				$i=0;
@@ -171,7 +173,11 @@ if ($_SESSION["login"]) {
 			</tr>
 			
 			<?php
-			
+				}else{
+					echo '<script language="javascript">';
+					echo 'alert("Pesanan Tidak Ditemukan")';
+					echo '</script>';
+				}
 			}
 			?>
 		</tfoot>
@@ -181,7 +187,22 @@ if ($_SESSION["login"]) {
 
 	 <div class="columns is-marginless">
 		<div class="column is-2 is-offset-10">
+			<?php
+			if(isset($_POST["proses"])){
+			?>
+			<form action="proses_transaksi.php" method="POST">
+				<input type="hidden" name="id_pesanan" value="<?php echo $order;?>">
+				<input type="hidden" name="id_karyawan" value="<?php echo $_SESSION['id_karyawan'];?>">
+				<input type="hidden" name="kembalianpost" value="" id="kembalianpost">
+				<input class="button is-success is-medium is-fullwidth" type="submit" name="prosestransaksi" value="PROSES">
+			</form>
+			<?php
+			}else{
+			?>
 			<button class="button is-success is-medium is-fullwidth">PROSES</button>
+			<?php
+			}
+			?>
 		</div>
 	 </div>
 
@@ -189,7 +210,7 @@ if ($_SESSION["login"]) {
   </div>
 </body>
 
-<script>
+<!-- <script>
 var app = angular.module('kembalianApp', []);
 app.controller('kembalianCtrl', function($scope) {
 	$scope.kembalian = function() {
@@ -200,7 +221,7 @@ app.controller('kembalianCtrl', function($scope) {
 		}
 	};
 });
-</script>
+</script> -->
 <script src="assets/js/jquery-3.3.1.min.js"></script>
  <script src="assets/js/editmenukasir.js"></script>
 <script src="assets/js/bulma.js"></script>

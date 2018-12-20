@@ -43,6 +43,7 @@ $(document).ready(function(){
             kembalian='-';
         }
         $('#hasilkembalian').html(kembalian);
+        $('#kembalianpost').val(kembalian);
     });
     
 });

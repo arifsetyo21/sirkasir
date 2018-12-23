@@ -183,7 +183,7 @@ if ($_SESSION["login"]) {
         <?php
                }else{
                 echo '<script language="javascript">';
-                echo 'alert("Pesanan Tidak Ditemukan")';
+                echo 'alert("Record History Tidak Ada!")';
                 echo '</script>';
                }
             }

@@ -85,7 +85,7 @@ if ($_SESSION["login"]) {
 	  <p class="menu-label">Transaction</p>
 	  <ul class="menu-list">
 	   <li><a class="is-active" href="">Pesanan</a></li>
-	   <li><a href="">Riwayat</a></li>
+	   <li><a href="history-kasir.php">Riwayat</a></li>
 	  </ul>
 
 	 </aside>
@@ -194,6 +194,8 @@ if ($_SESSION["login"]) {
 				<input type="hidden" name="id_pesanan" value="<?php echo $order;?>">
 				<input type="hidden" name="id_karyawan" value="<?php echo $_SESSION['id_karyawan'];?>">
 				<input type="hidden" name="kembalianpost" value="" id="kembalianpost">
+				<input type="hidden" name="totalpost" value="" id="totalpost">
+				<input type="hidden" name="bayarpost" value="" id="bayarpost">
 				<input class="button is-success is-medium is-fullwidth" type="submit" name="prosestransaksi" value="PROSES">
 			</form>
 			<?php

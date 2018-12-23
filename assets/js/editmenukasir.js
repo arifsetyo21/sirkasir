@@ -44,6 +44,8 @@ $(document).ready(function(){
         }
         $('#hasilkembalian').html(kembalian);
         $('#kembalianpost').val(kembalian);
+        $('#bayarpost').val(bayar);
+        $('#totalpost').val(total);
     });
     
 });

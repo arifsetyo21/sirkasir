@@ -12,8 +12,8 @@ if ($_SESSION["login"]) {
 
 
     // join tabel 4 tabel dengan nama column yang sama menggunakan as
-    $notif = query("SELECT p.id_pesanan, m.nama as nama_makanan, m.id_makanan as id_makanan, i.jumlah, p.id_meja, pl.nama, i.status as status_transaksi FROM pesanan p INNER JOIN item_pesanan i ON p.id_pesanan=i.id_pesanan INNER JOIN makanan m ON i.id_makanan=m.id_makanan INNER JOIN pelanggan pl ON p.id_pelanggan = pl.id_pelanggan WHERE p.id_pesanan IN (SELECT id_pesanan FROM transaksi) AND p.status = '1' AND i.status = '0' AND m.id_penjual = '$id_penjual'");
-    
+    $riwayat = query("SELECT p.tanggal_pesanan as tanggal_pesanan, p.id_pesanan, m.id_makanan, m.nama as nama_makanan, i.jumlah, p.id_meja, pl.nama as nama_pelanggan, i.subtotal, i.status, m.id_penjual as id_penjual FROM pesanan p INNER JOIN item_pesanan i ON p.id_pesanan=i.id_pesanan INNER JOIN makanan m ON i.id_makanan=m.id_makanan INNER JOIN pelanggan pl ON p.id_pelanggan = pl.id_pelanggan WHERE p.id_pesanan IN (SELECT id_pesanan FROM transaksi) AND m.id_penjual = '$id_penjual'");
+    //var_dump($riwayat);
   } else {
     header("Location: login.php");
   }
@@ -49,11 +49,11 @@ if ($_SESSION["login"]) {
       <hr>
       <p class="menu-label">General</p>
       <ul class="menu-list">
-       <li><a href="">Edit Profil</a></li>
+       <li><a href="dashboard-penjual.php">Pesanan</a></li>
       </ul>
       <p class="menu-label">Transaction</p>
       <ul class="menu-list">
-       <li><a href="penjual-riwayat.php">Riwayat</a></li>
+       <li><a class="is-active" href="penjual-riwayat.php">Riwayat</a></li>
       </ul>
 
      </aside>
@@ -66,11 +66,11 @@ if ($_SESSION["login"]) {
        <table style="100%">
         <thead>
         <?php $i = 1;?>
-         <tr><th>#</th><th>No. Order</th><th>Pesanan</th><th>Jumlah</th><th>Meja</th><th>Atas Nama</th><th>Aksi</th></tr>
+         <tr><th>#</th><th>No. Order</th><th>Pesanan</th><th>Jumlah</th><th>Meja</th><th>Atas Nama</th><th>Subtotal</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <?php foreach ($notif as $n) :?>
-          <tr><td><?php echo $i; $id_makanan = $n['id_makanan']; $id_pesanan = $n['id_pesanan']; $i++?></td><td><?php echo $n['id_pesanan']?></td><td><?php echo $n['nama_makanan'] ?></td><td><?php echo $n['jumlah']?></td><td><?php echo $n['id_meja']?></td><th><?= $n['nama']?></th><td><button class="button is-small is-success" onclick="antar('<?= $id_pesanan?>', '<?= $id_makanan?>')"><i class="fas fa-check"></i></button></td></tr>
+          <?php foreach ($riwayat as $r) :?>
+            <tr><td><?php echo $i; $id_makanan = $r['id_makanan']; $id_pesanan = $r['id_pesanan']; $i++?></td><td><?php echo $r['id_pesanan']?></td><td><?php echo $r['nama_makanan'] ?></td><td><?php echo $r['jumlah']?></td><td><?php echo $r['id_meja']?></td><td><?= $r['nama_pelanggan']?></td><td><?= $r['subtotal']?></td><td><span class="button is-static">Selesai</span></td></tr>
           <?php endforeach; ?>
         </tbody>
        </table> 
@@ -88,7 +88,7 @@ if ($_SESSION["login"]) {
 <script>
 
 var tombolAntar = document.getElementById('antar');
-var interval = setInterval(pesanan, 1000);
+//var interval = setInterval(pesanan, 1000);
 var tabelPesanan = document.getElementById('tabel-pesanan');
 
 function pesanan() {
@@ -103,7 +103,7 @@ function pesanan() {
     }
   }
   //eksekusi ajax
-  xhr.open('GET', 'assets/ajax/ajax-penjual-pesanan.php', true);
+  xhr.open('GET', 'assets/ajax/ajax-penjual-riwayat.php', true);
   xhr.send();
 }
 

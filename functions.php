@@ -79,7 +79,7 @@ function hapus($data) {
 
 	$id_makanan = $data["id_makanan"];
 
-	$query = "DELETE FROM makanan WHERE id_makanan = 'MK10'";
+	$query = "DELETE FROM makanan WHERE id_makanan = '$id_makanan'";
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
@@ -172,4 +172,17 @@ function order() {
 	while($i = $_SESSION["items"]){
 		$items[] = $i;
 	}
+}
+
+function antar($data) {
+
+	$id_pesanan = $data['id_pesanan'];
+	$id_makanan = $data['id_makanan'];
+
+	global $conn;
+
+	$query = "UPDATE item_pesanan SET status = '1' WHERE id_pesanan = '$id_pesanan' AND id_makanan = '$id_makanan'";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
 }

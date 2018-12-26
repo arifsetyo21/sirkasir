@@ -4,19 +4,19 @@ session_start();
 require 'functions.php';
 
     if ($_SESSION["login"]) {
-        if(isset($_SESSION["user"]) && $_SESSION["user"] == "pembeli"){
-            $id_pelanggan = $_SESSION["id_pelanggan"];
-            $result = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
+        if(isset($_SESSION["user"]) && $_SESSION["user"] == "petugas"){
+            $id_karyawan = $_SESSION["id_karyawan"];
+            $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id_karyawan = '$id_karyawan'");
 
-            $pembeli = mysqli_fetch_assoc($result);
+            $id_karyawan = mysqli_fetch_assoc($result);
 
-            $penjual = query("SELECT * FROM penjual");
+            $meja = query("SELECT * FROM meja");
         } else {
-            header("Location: login-pembeli.php");
+            header("Location: login.php");
         }
 
     } else {
-        header("Location: login-pembeli.php");
+        header("Location: login.php");
     }
 
 ?>
@@ -24,29 +24,35 @@ require 'functions.php';
 
 <html lang="en">
 
-<?php include 'assets/html/head-pembeli.php'?>
+<?php include 'assets/html/head-penjual.html'?>
 
 <body>
 
-    <?php include 'assets/html/nav-pembeli.php'?>
+    <?php include 'assets/html/nav-penjual.html'?>
 
     <div class="container">
         <div class="section">
             <!-- Staff -->
             <div class="row columns is-multiline">
-                <?php foreach ($penjual as $p) : ?>
-                <div class="column is-one-third">
+                <?php foreach ($meja as $m) : ?>
+                <div class="column is-one-qurter">
                     <div class="card" style="border-radius: 0.35rem">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                            <img class="foto-toko" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" style="border-radius: 1rem; padding: 0.5rem">
+                              <?php if ($m["status"] == "tersedia") :?>
+                                 <img class="foto-toko" src="assets/img/meja/Red.svg" alt="Placeholder image" style="border-radius: 1rem; padding: 0.5rem">
+                                 <!-- <div style="background-color: blue; width:100px; height: 100px; position: fixed" ></div> -->
+                              <?php else :?>  
+                                 <!-- <img class="foto-toko" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" style="border-radius: 1rem; padding: 0.5rem"> -->
+                                 <!-- <div class="foto-toko" style="background-color: red"></div> -->
+                              <?php endif;?>
                             </figure>
                         </div>
                         <div class="card-content">
                             <div class="media">
                             <div class="media-content">
-                                <p class="title is-4"><a href="pembeli-makanan.php?id_penjual=<?= $p["id_penjual"]?>"><?= $p["nama"]?></a></p>
-                                <p class="subtitle is-6">Stand : <?= $p["no_stand"]?></p>
+                                <p class="title is-4"><?= $m["id_meja"]?></a></p>
+                                <p class="subtitle is-6">Status : <?= $m["status"]?></p>
                             </div>
                             </div>
 

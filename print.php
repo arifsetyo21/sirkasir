@@ -3,15 +3,22 @@
 session_start();
 include 'functions.php';
 
-if (isset($_GET)) {
-   $id_pesanan = $_GET["no"];
-   $id_pelanggan = $_SESSION["id_pelanggan"];
-   $query = "SELECT * FROM item_pesanan INNER JOIN makanan ON item_pesanan.id_makanan=makanan.id_makanan WHERE id_pesanan = '$id_pesanan'";
-   $items = query($query);
-   $pelanggan = query("SELECT nama FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
+if ($_SESSION["login"]) {
+   if(isset($_SESSION["user"]) && $_SESSION["user"] == "pembeli"){
+      if (isset($_GET)) {
+         $id_pesanan = $_GET["no"];
+         $id_pelanggan = $_SESSION["id_pelanggan"];
+         $query = "SELECT * FROM item_pesanan INNER JOIN makanan ON item_pesanan.id_makanan=makanan.id_makanan WHERE id_pesanan = '$id_pesanan'";
+         $items = query($query);
+         $pelanggan = query("SELECT nama FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
+      }
+   } else {
+      header("Location: login-pembeli.php");
+   }
 
+} else {
+   header("Location: login-pembeli.php");
 }
-
 
 ?>
 
@@ -35,7 +42,7 @@ if (isset($_GET)) {
          display: none;
       }
 
-      /@media print {
+      @media print {
 			.noprint {display: none; }
 			.center-margin-print{
 				margin: auto;
@@ -48,7 +55,7 @@ if (isset($_GET)) {
    <script>$(document).ready(function(){
       window.print();
       $(document).click(function(){
-         window.location.href='dashboard-pembeli-keranjang.php'; 
+         window.location.href='pembeli-keranjang.php'; 
          });
       });
    </script>
@@ -58,32 +65,7 @@ if (isset($_GET)) {
 
 <section class="is-fullwidth" class="noprint">
 
-<nav class="navbar" role="navigation" aria-label="main navigation" class="noprint">
-<div class="navbar-brand">
- <a class="navbar-item brand-text" href="../">
-  <img src="assets/img/logo.png" alt="" srcset="" class="noprint">
- </a>
- <div class="navbar-burger burger " data-target="navMenu">
-  <span></span>
-  <span></span>
-  <span></span>
- </div>
-</div>
-
-<div id="navMenu" class="navbar-menu">
- <div class="navbar-start">
-  <div class="navbar-item">
-   <a class="navbar-item" href="">Home</a>
-  </div>
- </div>
- <div class="navbar-end">
-  <div class="navbar-item">
-   <a class="button is-danger" href="logout.php">Logout</a>
-  </div>
- </div>
-</div>
-
-</nav>
+<?php include "assets/html/nav-penjual.html"?>
 
 </section>
 
@@ -117,7 +99,7 @@ if (isset($_GET)) {
    <?php $total = 0; $i = 1;?>
       <?php foreach ($items as $makanan) : ?>
          <tr>
-            <td><?= $i?></td>
+            <td><?= $i; ?></td>
             <td><?php echo $makanan["nama"]?></td>
             <td><?php echo $makanan["harga"]?></td>
             <td><input class="input" type="number" value="<?php echo $makanan["jumlah"];?>" style="width: 70px; text-align:center;" disabled></td>

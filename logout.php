@@ -2,9 +2,9 @@
 session_start();
 
 if ($_SESSION["user"] == "pembeli") {
-        $page = "Location: login-pembeli.php";
+        $page = "Location: index.php";
 } else {
-        $page = "Location: login.php";
+        $page = "Location: index.php";
 }
         session_unset();
         session_destroy();

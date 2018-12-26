@@ -26,10 +26,10 @@ if (isset($_POST["login"])) {
         header("Location: dashboard-kasir.php");
         exit;
       } elseif ( $_SESSION["user"] == "petugas") {
-        header("Location: petugas.php");
+        header("Location: dashboard-petugas.php");
         exit;   
       } elseif ($_SESSION["user"] == "admin") {
-        header("Location: admin.php");
+        header("Location: dashboard-admin.php");
         exit;
       } else {
         header("Location: login.php");

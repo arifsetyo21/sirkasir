@@ -35,45 +35,12 @@ if ($_SESSION["login"]) {
 <!DOCTYPE html>
 <html>
 
-<head>
- <meta charset="utf-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Tambah Makanan</title>
- <link rel="stylesheet" href="assets/css/bulma.min.css" />
- <link rel="stylesheet" href="assets/css/style.css" />
- <script defer src="assets/js/all.js"></script>
-</head>
+   <?php include "assets/html/head-penjual.html"?>
 
 <body>
   <section class="is-fullwidth">
 
-   <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-     <a class="navbar-item brand-text" href="../">
-      <img src="assets/img/logo.png" alt="" srcset="">
-     </a>
-     <div class="navbar-burger burger " data-target="navMenu">
-      <span></span>
-      <span></span>
-      <span></span>
-     </div>
-    </div>
-
-    <div id="navMenu" class="navbar-menu">
-     <div class="navbar-start">
-      <div class="navbar-item">
-       <a class="navbar-item" href="dashboard-penjual.php">Home</a>
-       <a class="navbar-item" href="penjual-makanan.php">Makanan</a>
-      </div>
-     </div>
-     <div class="navbar-end">
-      <div class="navbar-item">
-       <a class="button is-danger" href="logout.php">Logout</a>
-      </div>
-     </div>
-    </div>
-
-   </nav>
+   <?php include "assets/html/nav-penjual.html"?>
 
   </section>
 

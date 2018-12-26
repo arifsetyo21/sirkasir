@@ -35,49 +35,11 @@ require 'functions.php';
 
 <html lang="en">
 
-<head>
-   <meta charset="UTF-8">
-   <title>Makanan</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
-   <link rel='stylesheet prefetch' href='assets/css/bulma.min.css'>
-   <script src="assets/js/all.js"></script>
-   <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
-   <link rel="stylesheet" href="assets/css/card-dashboard-pembeli.css">
-</head>
+<?php include 'assets/html/head-pembeli.php'?>
 
 <body>
 
-        <!-- START NAV -->
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item brand-text" href="../">
-        <img src="assets/img/logo.png" alt="" srcset="">
-        </a>
-        <div class="navbar-burger burger " data-target="navMenu">
-        <span></span>
-        <span></span>
-        <span></span>
-        </div>
-    </div>
-
-    <div id="navMenu" class="navbar-menu">
-        <div class="navbar-start">
-        <div class="navbar-item">
-        <a class="navbar-item" href="">Home</a>
-        <a class="navbar-item" href="">Makanan</a>
-        </div>
-        </div>
-        <div class="navbar-end">
-        <div class="navbar-item">
-        <a href= "dashboard-pembeli-keranjang.php" class="button is-text"><i class="fas fa-shopping-cart"></i></a>
-        <a class="button is-danger" href="logout.php">Logout</a>
-        </div>
-        </div>
-    </div>
-
-</nav>
-            <!-- END NAV -->
+<?php include 'assets/html/nav-pembeli.php'?>
 
     <div class="container">
         <div class="section">

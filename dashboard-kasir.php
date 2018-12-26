@@ -122,7 +122,7 @@ if ($_SESSION["login"]) {
 		<tbody>
 		<?php
 			if (isset($_POST["proses"])){
-				$queryCek= mysqli_query($conn, "SELECT id_pesanan FROM pesanan WHERE id_pesanan='$order' AND status=0");
+				$queryCek= mysqli_query($conn, "SELECT id_pesanan FROM pesanan WHERE id_pesanan='$order' AND status = '0'");
 				if(mysqli_num_rows($queryCek)==1){
 				$query1= mysqli_query($conn, "SELECT p.id_pesanan,m.id_makanan,m.harga,m.nama,ip.jumlah,ip.subtotal FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan = '$order'");
 				$query2= mysqli_query($conn, "SELECT SUM(ip.subtotal) AS total FROM item_pesanan ip INNER JOIN pesanan p ON ip.id_pesanan=p.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan WHERE ip.id_pesanan ='$order' ");

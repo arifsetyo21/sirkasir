@@ -7,6 +7,7 @@ include "phpqrcode/qrlib.php";
 if ($_SESSION["login"]) {
 	if(isset($_SESSION["user"]) && $_SESSION["user"] == "pembeli"){
 		$id_pelanggan = $_SESSION["id_pelanggan"];
+		$meja = $_SESSION["meja"];
 		$result = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
       $pembeli = mysqli_fetch_assoc($result);
       
@@ -29,8 +30,10 @@ if ($_SESSION["login"]) {
 				//status : baru pesan, belum bayar = order : 0
 				//				Sudah bayar di kasir = paid : 1
 				//				Sudah di proses penjual = selesai : 2
-				$query = "INSERT INTO pesanan VALUES ('', '$time[0]', $total, 'MJ1', '$id_pelanggan', '0')";
+				$query = "INSERT INTO pesanan VALUES ('', '$time[0]', $total, '$meja', '$id_pelanggan', '0')";
+				$query2 = "UPDATE meja SET status = 'used' WHERE id_meja = '$meja'";
 				mysqli_query($conn, $query);
+				mysqli_query($conn, $query2);
 				
 
 				// Ambil id_pesanan berdasarkan urutan tanggal

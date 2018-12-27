@@ -2,6 +2,8 @@
 session_start();
 require 'functions.php';
 
+$meja = query("SELECT * FROM meja WHERE status='free'");
+
 if (isset($_POST["login"])) {
 
   $username = htmlspecialchars($_POST["username"]);
@@ -20,6 +22,7 @@ if (isset($_POST["login"])) {
       $_SESSION["login"] = true;
       $_SESSION["id_pelanggan"] = $id_pelanggan;
       $_SESSION["user"] = "pembeli";
+      $_SESSION["meja"] = htmlspecialchars($_POST["meja"]);
   
         header("Location: dashboard-pembeli.php");
         exit;
@@ -86,7 +89,11 @@ if (isset($_POST["login"])) {
         <form action="" method="post">
          <div class="field">
           <div class="control has-icons-left has-icons-right">
-           <input type="text" class="input" placeholder="Meja" autofocus name="meja">
+            <select name="meja" class="input" placeholder="meja" id="">
+            <?php foreach ($meja as $m) :?>
+              <option value="<?= $m['id_meja']?>"><?= $m['id_meja']?></option>
+            <?php endforeach; ?>
+            </select>
            <span class="icon is-medium">
             <i class="fa fa-th-large"></i>
            </span>

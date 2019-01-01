@@ -38,7 +38,7 @@ if ($_SESSION["login"]) {
   </section>
 
   <div class="container">
-
+  
    <div class="columns is-marginless">
 
     <div class="column is-2">
@@ -64,7 +64,7 @@ if ($_SESSION["login"]) {
     <div class="column is-10">
     <div class="level">
       <h2 class="title is-2 level-left">Daftar Makanan</h2>
-      <a href="penjual-makanan-tambah.php" target="_blank" class="level-right"><button class="button is-success"><i class="fas fa-plus"></i><p style="color:#23d160">p</p> Tambah Makanan</button></a>
+      <a href="penjual-makanan-tambah.php" class="level-right"><button class="button is-success"><i class="fas fa-plus"></i><p style="color:#23d160">p</p> Tambah Makanan</button></a>
     </div>
      <div class="box content is-fullwidth">
       <div class="pesanan">
@@ -80,7 +80,7 @@ if ($_SESSION["login"]) {
           <td><?= $i?></td>
           <td><img src="assets/img/makanan/<?= $makanan["gambar"]?>" alt="" style="width:70px"></td>
           <td><?= $makanan["nama"]?></td>
-          <td><?= $makanan["deskripsi"]?></td>
+          <td><?= $makanan["desc"]?></td>
           <td><?= $makanan["harga"]?></td>
           <td>
             <a href="penjual-makanan-ubah.php?id_makanan=<?= $makanan['id_makanan'] ?>"><button class="button is-small is-warning"><i class="fas fa-pencil-alt"></i></button></a>
@@ -102,5 +102,8 @@ if ($_SESSION["login"]) {
 
 <script src="assets/js/bulma.js"></script>
 <script src="assets/js/script.js"></script>
+<script>
+
+</script>
 
 </html>

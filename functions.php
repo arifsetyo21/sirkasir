@@ -106,7 +106,7 @@ function ubah($data) {
 				nama = '$nama',
 				harga = '$harga',
 				stok = '$stok',
-				deskripsi = '$deskripsi',
+				`desc` = '$deskripsi',
 				gambar = '$gambar'
 				WHERE id_makanan = '$id_makanan'";
 	

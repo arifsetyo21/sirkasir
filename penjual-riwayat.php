@@ -64,6 +64,25 @@ if ($_SESSION["login"]) {
      <div class="box content is-fullwidth">
       <div class="pesanan" id="tabel-pesanan">
        <table style="100%">
+       <div class="control">
+          <div class="select">
+            <select required>
+                <option value="1">Januari</option>
+                <option value="2">Februari</option>
+                <option value="3">Maret</option>
+                <option value="4">April</option>
+                <option value="5">Mei</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">Agustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+            </select>
+          </div>
+        </div>
+        <hr style="border: 1px solid rgba(0,0,0,0.1)">
         <thead>
         <?php $i = 1;?>
          <tr><th>#</th><th>No. Order</th><th>Pesanan</th><th>Jumlah</th><th>Meja</th><th>Atas Nama</th><th>Subtotal</th><th>Status</th></tr>
@@ -82,7 +101,7 @@ if ($_SESSION["login"]) {
    </div>
   </div>
 </body>
-
+</html>
 <script src="assets/js/bulma.js"></script>
 <script src="assets/js/script.js"></script>
 <script>

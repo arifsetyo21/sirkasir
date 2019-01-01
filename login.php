@@ -26,7 +26,7 @@ if (isset($_POST["login"])) {
         header("Location: dashboard-kasir.php");
         exit;
       } elseif ( $_SESSION["user"] == "petugas") {
-        header("Location: dashboard-petugas.php");
+        header("Location: petugas.php");
         exit;   
       } elseif ($_SESSION["user"] == "admin") {
         header("Location: dashboard-admin.php");

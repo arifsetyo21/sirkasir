@@ -10,7 +10,7 @@
                         <a href="makanan.php"><i class="menu-icon fa fa-leaf"></i>Makanan </a>
                     </li>
                     <li class="">
-                        <a href="tanaman.php"><i class="menu-icon fa fa-leaf"></i>Meja </a>
+                        <a href="meja.php"><i class="menu-icon fa fa-leaf"></i>Meja </a>
                     </li>
                     <li class="">
                         <a href="tanaman.php"><i class="menu-icon fa fa-leaf"></i>Pembayaran Penjual </a>

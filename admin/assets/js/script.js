@@ -55,25 +55,25 @@ function ubahMakanan(param) {
    window.location.assign('ubah-makanan.php?id_makanan=' + param);
 }
 
-function delTanaman(param) {
+function delMakanan(param) {
    var x = confirm('Yakin untuk hapus?');
    if (x == true) {
-      window.location.assign('hapus-tanaman.php?id_tanaman=' + param);
+      window.location.assign('hapus-makanan.php?id_makanan=' + param);
    }
 }
 
-function addTanah() {
-   window.location.assign('tambah-tanah.php');
+function addPenjual() {
+   window.location.assign('tambah-penjual.php');
 }
 
-function ubahTanah(param) {
-   window.location.assign('ubah-tanah.php?id_tanah=' + param);
+function ubahPenjual(param) {
+   window.location.assign('ubah-penjual.php?id_penjual=' + param);
 }
 
-function delTanah(param) {
+function delPenjual(param) {
    var x = confirm('Yakin untuk hapus?');
    if (x == true) {
-      window.location.assign('hapus-tanah.php?id_tanah=' + param);
+      window.location.assign('hapus-penjual.php?id_penjual=' + param);
    }
 }
 

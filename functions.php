@@ -32,11 +32,33 @@ function tambah($data) {
 
 }
 
+function tambahPenjual($data) {
+	global $conn;
+
+	$id_penjual = '';
+	$nama = $data["nama"];
+	$username = $data["username"];
+	$password = $data["password"];
+	$no_stand = $data["no_stand"];
+	$no_npwp = $data["no_npwp"];
+	$deskripsi = $data["deskripsi"];
+	$gambar = upload();
+
+	$query = "INSERT INTO penjual VALUES ('', '$nama', '$username', '$password', '$no_stand', '$no_npwp', '$gambar','$deskripsi')";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+
+}
+
 function upload(){
 	$namaFile = $_FILES["gambar"]["name"];
 	$ukuranFile = $_FILES["gambar"]["size"];
 	$error = $_FILES["gambar"]["error"];
 	$tmpName = $_FILES["gambar"]["tmp_name"];
+	if (isset($_POST['admin'])) {
+		$admin = $_POST['admin'];
+	}
 
 	// cek apakah ada gambar yang diupload apa tidak
 	if ($error === 4) {
@@ -69,7 +91,13 @@ function upload(){
 	$namaFileBaru .= '.';
 	$namaFileBaru .= $extensiGambar;
 
-	move_uploaded_file($tmpName, 'assets/img/makanan/' . $namaFileBaru);
+	if ($admin == "makanan") {
+		move_uploaded_file($tmpName, '../assets/img/makanan/' . $namaFileBaru);
+	} else if ($admin == "penjual") {
+		move_uploaded_file($tmpName, '../assets/img/penjual/' . $namaFileBaru);
+	} else {
+		move_uploaded_file($tmpName, 'assets/img/makanan/' . $namaFileBaru);
+	}
 	
 	return $namaFileBaru;
 }
@@ -113,6 +141,39 @@ function ubah($data) {
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
+}
+
+function ubahPenjual($data) {
+	global $conn;
+
+	$id_penjual = $data['id_penjual'];
+	$nama = $data["nama"];
+	$username = $data["username"];
+	$password = $data["password"];
+	$no_stand = $data["no_stand"];
+	$no_npwp = $data["no_npwp"];
+	$deskripsi = $data["deskripsi"];
+	$gambarLama = $data["gambarLama"];
+
+	if ( $_FILES["gambar"]["error"] === 4 ) {
+		$gambar = $gambarLama;
+	} else {
+		$gambar = upload();
+	}
+
+	$query = "UPDATE penjual SET 
+					nama = '$nama',
+					username = '$username',
+					`password` = '$password',
+					no_stand = '$no_stand',
+					no_npwp = '$no_npwp',
+					gambar = '$gambar',
+					`desc` = '$deskripsi'
+					WHERE id_penjual = '$id_penjual'";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+
 }
 
 function cart($data) {

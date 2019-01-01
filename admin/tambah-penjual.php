@@ -4,10 +4,10 @@ include '../functions.php';
 if (isset($_POST["tambah"])) {
    //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
 
-    if( tambah($_POST) > 0){
+    if( tambahPenjual($_POST) > 0){
        echo "<script>
              alert('data berhasil ditambahkan');
-             window.location.href = 'makanan.php';
+             window.location.href = 'penjual.php';
        </script>";
     } else {
        echo "data gagal ditambahkan";
@@ -105,38 +105,36 @@ if (isset($_POST["tambah"])) {
                 <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Data</strong> Tanaman
+                                <strong>Tambah Data</strong> Penjual
                             </div>
                             <div class="card-body card-block">
                                 <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="makanan" name="admin" hidden>
+                                <input type="text" value="penjual" name="admin" hidden>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label class=" form-control-label">Foto Makanan</label></div>
+                                        <div class="col col-md-3"><label class=" form-control-label">Foto Penjual</label></div>
                                         <div class="col-12 col-md-9">
                                             <input type="file" class="btn btn-outline-secondary" name="gambar" id="gambar">
                                         </div>
                                     </div> 
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Penjual</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="id_penjual" id="select" class="form-control">
-                                            <?php $result = query("SELECT * FROM penjual"); foreach ($result as $r) :?>
-                                                <option value="<?= $r['id_penjual']?>"><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
-                                            <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
                                         <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
                                         <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Harga </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Username </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="username" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Stok </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Password </label></div>
+                                        <div class="col-12 col-md-9"><input required type="password" id="harga-input" name="password" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">NO Stand </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="no_stand" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">NO NPWP </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="no_npwp" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Deskripsi</label></div>

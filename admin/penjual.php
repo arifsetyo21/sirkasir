@@ -1,19 +1,16 @@
 <?php 
+
+session_start();
 include '../functions.php';
 
-if (isset($_POST["tambah"])) {
-   //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
+// if ($_SESSION["admin"] != "admin"){
+//     echo "<script>
+//             window.location.href='login.php';
+//         </script>";
+// }
 
-    if( tambah($_POST) > 0){
-       echo "<script>
-             alert('data berhasil ditambahkan');
-             window.location.href = 'makanan.php';
-       </script>";
-    } else {
-       echo "data gagal ditambahkan";
-    }
-  }
-
+$penjual = query("SELECT * FROM penjual");
+$rows = $penjual;
 
 ?>
 
@@ -28,7 +25,7 @@ if (isset($_POST["tambah"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Makanan</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -50,7 +47,6 @@ if (isset($_POST["tambah"])) {
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <script src="assets/js/script.js"></script>
-
     <style>
         #weatherWidget .currentDesc {
         color: #ffffff!important;
@@ -99,60 +95,53 @@ if (isset($_POST["tambah"])) {
         <?php include 'assets/php/dashboar-header.php'?>
         <!-- /#header -->
 
+        
         <div class="content">
             <div class="animated fadeIn">
-                <div class="row align-items-center">
-                <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Data</strong> Tanaman
+                                <strong class="card-title">Daftar Makanan</strong>
+                                <div class="float-right"><button class="btn btn-success btn-sm" onclick="addPenjual()"><i class="fa fa-plus-square-o"></i> Tambah</button></div>
                             </div>
-                            <div class="card-body card-block">
-                                <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="makanan" name="admin" hidden>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label class=" form-control-label">Foto Makanan</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="file" class="btn btn-outline-secondary" name="gambar" id="gambar">
-                                        </div>
-                                    </div> 
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Penjual</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="id_penjual" id="select" class="form-control">
-                                            <?php $result = query("SELECT * FROM penjual"); foreach ($result as $r) :?>
-                                                <option value="<?= $r['id_penjual']?>"><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
-                                            <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Harga </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Stok </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Deskripsi</label></div>
-                                        <div class="col-12 col-md-9"><textarea name="deskripsi" id="textarea-input" rows="3" placeholder="Deskripsi..." class="form-control" require></textarea></div>
-                                    </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" name="tambah" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                                </form>
-                            </div>
-                            
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th class="serial">#</th>
+                                            <th class="avatar">Gambar</th>
+                                            <th>Nama</th>
+                                            <th>Username</th>
+                                            <th>No Stand</th>
+                                            <th>No NPWP</th>
+                                            <th>Deskripsi</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1;foreach ($rows as $row) :?>
+                                        <tr>
+                                            <td class="serial"><?= $i?>.</td>
+                                            <td class="avatar">
+                                                <div class="round-img">
+                                                    <a href="#"><img class="rounded-circle" src="../assets/img/penjual/<?= $row['gambar'] ?>" alt=""></a>
+                                                </div>
+                                            </td>
+                                            <td>  <span class="name"><?= $row['nama']?></span> </td>
+                                            <td> <span class="product"><?= $row['username']?></span> </td>
+                                            <td> <span class="product"><?= $row['no_stand']?></span> </td>
+                                            <td> <span class="product"><?= $row['no_npwp']?></span> </td>
+                                            <td> <span class="product"><?= $row['desc']?></span> </td>
+                                            <td>
+                                            <button type="button" class="btn btn-warning btn-sm" onclick="ubahPenjual('<?= $row['id_penjual']?>')"><i class="fa fa-edit"></i>Ubah</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="delPenjual('<?= $row['id_penjual']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
+                                            </td>
+                                        </tr>
+                                        <?php $i++; endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
                         </div>
                     </div>
                 </div>
@@ -182,6 +171,44 @@ if (isset($_POST["tambah"])) {
                 </div>
                 <!-- /#event-modal -->
                 <!-- Modal - Calendar - Add Category -->
+                <div class="modal fade none-border" id="add-category">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title"><strong>Add a category </strong></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Category Name</label>
+                                            <input class="form-control form-white" placeholder="Enter name" type="text"
+                                                name="category-name" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">Choose Category Color</label>
+                                            <select class="form-control form-white" data-placeholder="Choose a color..."
+                                                name="category-color">
+                                                <option value="success">Success</option>
+                                                <option value="danger">Danger</option>
+                                                <option value="info">Info</option>
+                                                <option value="pink">Pink</option>
+                                                <option value="primary">Primary</option>
+                                                <option value="warning">Warning</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger waves-effect waves-light save-category"
+                                    data-dismiss="modal">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- /#add-category -->
             </div>
             <!-- .animated -->
@@ -229,6 +256,15 @@ if (isset($_POST["tambah"])) {
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+      function delMakanan(param) {
+    var x = confirm('Yakin untuk hapus?');
+    if (x == true) {
+        window.location.assign('hapus-makanan.php?id_makanan=' + param);
+      }
+    }
+    </script>
 
     <!--Local Stuff-->
 </body>

@@ -20,8 +20,8 @@
                             <i class="menu-icon fa fa-cogs"></i>Kelola User</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-puzzle-piece"></i><a href="karyawan.php">Karyawan</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="ketinggian.php">Penjual</a></li>
-                            <li><i class="fa fa-bars"></i><a href="suhu.php">Pelanggan</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="penjual.php">Penjual</a></li>
+                            <li><i class="fa fa-bars"></i><a href="pelanggan.php">Pelanggan</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">

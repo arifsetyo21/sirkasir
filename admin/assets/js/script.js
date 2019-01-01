@@ -13,9 +13,43 @@ function delUser(param) {
    }
 }
 
-function addMakanan() {
-   window.location.assign('tambah-makanan.php');
+//Ichsan
+
+   //meja
+function addMeja(){
+   window.location.assign('tambah-meja.php');
 }
+function ubahMeja(param) {
+   window.location.assign('ubah-meja.php?id_meja=' + param);
+}
+
+function delMeja(param) {
+   var x = confirm('Yakin Ingin Menghapus Meja Ini?');
+   if (x == true) {
+      window.location.assign('hapus-meja.php?id_meja=' + param);
+   }
+   
+}
+   //end of meja
+
+   //karyawan
+function addKaryawan(){
+   window.location.assign('tambah-karyawan.php');
+}
+function ubahKaryawan(param) {
+   window.location.assign('ubah-karyawan.php?id_karyawan=' + param);
+}
+
+function delKaryawan(param) {
+   var x = confirm('Yakin Ingin Menghapus Karyawan Ini?');
+   if (x == true) {
+      window.location.assign('hapus-karyawan.php?id_karyawan=' + param);
+   }
+   
+}
+   //karyawan
+
+//End of Ichsan
 
 function ubahMakanan(param) {
    window.location.assign('ubah-makanan.php?id_makanan=' + param);

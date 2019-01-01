@@ -10,7 +10,7 @@
                         <a href="makanan.php"><i class="menu-icon fa fa-leaf"></i>Makanan </a>
                     </li>
                     <li class="">
-                        <a href="tanaman.php"><i class="menu-icon fa fa-leaf"></i>Meja </a>
+                        <a href="meja.php"><i class="menu-icon fa fa-leaf"></i>Meja </a>
                     </li>
                     <li class="">
                         <a href="tanaman.php"><i class="menu-icon fa fa-leaf"></i>Pembayaran Penjual </a>
@@ -19,7 +19,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="menu-icon fa fa-cogs"></i>Kelola User</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="curah.php">Karyawan</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="karyawan.php">Karyawan</a></li>
                             <li><i class="fa fa-id-badge"></i><a href="ketinggian.php">Penjual</a></li>
                             <li><i class="fa fa-bars"></i><a href="suhu.php">Pelanggan</a></li>
                         </ul>

@@ -1,16 +1,21 @@
 <?php 
 include '../functions.php';
 
+if (isset($_GET['id_penjual'])) {
+  $id_penjual = $_GET['id_penjual'];
+  $penjual = query("SELECT * FROM penjual WHERE id_penjual = '$id_penjual'")[0];
+}
+
 if (isset($_POST["tambah"])) {
    //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
 
-    if( tambah($_POST) > 0){
+    if( ubahPenjual($_POST) > 0){
        echo "<script>
-             alert('data berhasil ditambahkan');
-             window.location.href = 'makanan.php';
+             alert('data berhasil di Ubah');
+             window.location.href = 'penjual.php';
        </script>";
     } else {
-       echo "data gagal ditambahkan";
+       echo "data gagal di Ubah";
     }
   }
 
@@ -105,42 +110,45 @@ if (isset($_POST["tambah"])) {
                 <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Data</strong> Tanaman
+                                <strong>Tambah Data</strong> Penjual
                             </div>
                             <div class="card-body card-block">
+                            <div class="d-block mx-auto">
+                                    <img class="rounded-circle mx-auto d-block" src="../assets/img/penjual/<?= $penjual['gambar'];?>" alt="Card image cap" width="250px"><br>
+                                </div>
                                 <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="makanan" name="admin" hidden>
+                                <input type="text" value="<?= $id_penjual?>" name="id_penjual">
+                                <input type="text" value="penjual" name="admin" hidden>
+                                <input type="text" value="<?= $penjual['gambar']?>" name="gambarLama" hidden>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label class=" form-control-label">Foto Makanan</label></div>
+                                        <div class="col col-md-3"><label class=" form-control-label">Foto Penjual</label></div>
                                         <div class="col-12 col-md-9">
                                             <input type="file" class="btn btn-outline-secondary" name="gambar" id="gambar">
                                         </div>
                                     </div> 
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Penjual</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="id_penjual" id="select" class="form-control">
-                                            <?php $result = query("SELECT * FROM penjual"); foreach ($result as $r) :?>
-                                                <option value="<?= $r['id_penjual']?>"><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
-                                            <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
                                         <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="<?= $penjual['nama']?>" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Harga </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Username </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="username" value="<?= $penjual['username']?>" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Stok </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Password </label></div>
+                                        <div class="col-12 col-md-9"><input required type="password" id="harga-input" name="password" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">NO Stand </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="no_stand" value="<?= $penjual['no_stand']?>" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">NO NPWP </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="no_npwp" value="<?= $penjual['no_npwp']?>" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Deskripsi</label></div>
-                                        <div class="col-12 col-md-9"><textarea name="deskripsi" id="textarea-input" rows="3" placeholder="Deskripsi..." class="form-control" require></textarea></div>
+                                        <div class="col-12 col-md-9"><textarea name="deskripsi" id="textarea-input" rows="3" placeholder="Deskripsi..." class="form-control" require><?= $penjual['desc']?></textarea></div>
                                     </div>
                             </div>
                             <div class="card-footer">

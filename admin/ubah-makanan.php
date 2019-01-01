@@ -1,20 +1,30 @@
 <?php 
 include '../functions.php';
 
+if (isset($_GET['id_makanan'])) {
+   $id_makanan = $_GET['id_makanan'];
+   $makanan = query("SELECT * FROM makanan WHERE id_makanan = '$id_makanan'")[0];
+} else {
+   echo "<script>
+         alert('Data tidak lengkap');
+         window.location.href = 'makanan.php';
+   </script>";
+}
+
+
+
 if (isset($_POST["tambah"])) {
    //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
 
-    if( tambah($_POST) > 0){
+    if( ubah($_POST) > 0){
        echo "<script>
-             alert('data berhasil ditambahkan');
+             alert('data berhasil di Ubah');
              window.location.href = 'makanan.php';
        </script>";
     } else {
-       echo "data gagal ditambahkan";
+       echo "data gagal di Ubah";
     }
   }
-
-
 ?>
 
 <!doctype html>
@@ -28,7 +38,7 @@ if (isset($_POST["tambah"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Makanan</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -105,42 +115,52 @@ if (isset($_POST["tambah"])) {
                 <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Data</strong> Tanaman
+                                <strong>Ubah Data</strong> Makanan
                             </div>
                             <div class="card-body card-block">
+                            <div class="form-group">
+                            <div class="d-block mx-auto">
+                                    <img class="rounded-circle mx-auto d-block" src="../assets/img/makanan/<?= $makanan['gambar'];?>" alt="Card image cap" width="250px"><br>
+                                </div>
                                 <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="makanan" name="admin" hidden>
+                                <input type="text" value="true" name="admin" hidden>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label class=" form-control-label">Foto Makanan</label></div>
                                         <div class="col-12 col-md-9">
                                             <input type="file" class="btn btn-outline-secondary" name="gambar" id="gambar">
                                         </div>
+                                        <input type="text" name="gambarLama" value="<?= $makanan['gambar']?>" hidden>
+                                        <input type="text" name="id_makanan" value="<?= $makanan['id_makanan']?>" hidden>
                                     </div> 
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="select" class=" form-control-label">Penjual</label></div>
                                         <div class="col-12 col-md-9">
                                             <select name="id_penjual" id="select" class="form-control">
                                             <?php $result = query("SELECT * FROM penjual"); foreach ($result as $r) :?>
-                                                <option value="<?= $r['id_penjual']?>"><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
+                                             <?php if ($r['id_penjual'] == $makanan['id_penjual']) :?>
+                                                   <option value="<?= $r['id_penjual']?>" selected><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
+                                                <?php else :?>
+                                                   <option value="<?= $r['id_penjual']?>"><?= $r['id_penjual']?> - <?= $r['nama']?> </option>
+                                                <?php endif ?>
                                             <?php endforeach;?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="<?= $makanan['nama']?>" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="panen-input" class=" form-control-label">Harga </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
+                                        <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="<?= $makanan['harga']?>" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Stok </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="<?= $makanan['stok']?>" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Deskripsi</label></div>
-                                        <div class="col-12 col-md-9"><textarea name="deskripsi" id="textarea-input" rows="3" placeholder="Deskripsi..." class="form-control" require></textarea></div>
+                                        <div class="col-12 col-md-9"><textarea name="deskripsi" id="textarea-input" rows="3" placeholder="Deskripsi..." class="form-control" require><?= $makanan['desc']?></textarea></div>
                                     </div>
                             </div>
                             <div class="card-footer">

@@ -140,7 +140,7 @@ while ( $row = mysqli_fetch_assoc($result)) {
                                             <td> <span class="product"><?= $row['desc']?></span> </td>
                                             <td>
                                             <button type="button" class="btn btn-warning btn-sm" onclick="ubahMakanan('<?= $row['id_makanan']?>')"><i class="fa fa-edit"></i>Ubah</button>
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="delMakanan('<?= $row['id_makanan']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="delMakanan('<?= $row['id_makanan']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
                                             </td>
                                         </tr>
                                         <?php $i++; endforeach;?>

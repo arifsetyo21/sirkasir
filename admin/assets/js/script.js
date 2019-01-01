@@ -13,12 +13,28 @@ function delUser(param) {
    }
 }
 
+function addPelanggan() {
+   window.location.assign('tambah-pelanggan.php');
+}
+
+function ubahPelanggan(param) {
+   window.location.assign('ubah-pelanggan.php?id_pelanggan=' + param);
+}
+
+function delPelanggan(param) {
+   var x = confirm('Yakin untuk hapus?');
+   if (x == true) {
+      window.location.assign('hapus-pelanggan.php?id_pelanggan=' + param);
+   }
+}
+
 //Ichsan
 
-   //meja
-function addMeja(){
+//meja
+function addMeja() {
    window.location.assign('tambah-meja.php');
 }
+
 function ubahMeja(param) {
    window.location.assign('ubah-meja.php?id_meja=' + param);
 }
@@ -28,14 +44,15 @@ function delMeja(param) {
    if (x == true) {
       window.location.assign('hapus-meja.php?id_meja=' + param);
    }
-   
-}
-   //end of meja
 
-   //karyawan
-function addKaryawan(){
+}
+//end of meja
+
+//karyawan
+function addKaryawan() {
    window.location.assign('tambah-karyawan.php');
 }
+
 function ubahKaryawan(param) {
    window.location.assign('ubah-karyawan.php?id_karyawan=' + param);
 }
@@ -45,9 +62,9 @@ function delKaryawan(param) {
    if (x == true) {
       window.location.assign('hapus-karyawan.php?id_karyawan=' + param);
    }
-   
+
 }
-   //karyawan
+//karyawan
 
 //End of Ichsan
 

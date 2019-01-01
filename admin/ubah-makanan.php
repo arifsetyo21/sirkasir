@@ -123,7 +123,7 @@ if (isset($_POST["tambah"])) {
                                     <img class="rounded-circle mx-auto d-block" src="../assets/img/makanan/<?= $makanan['gambar'];?>" alt="Card image cap" width="250px"><br>
                                 </div>
                                 <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="true" name="admin" hidden>
+                                <input type="text" value="makanan" name="admin" hidden>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label class=" form-control-label">Foto Makanan</label></div>
                                         <div class="col-12 col-md-9">

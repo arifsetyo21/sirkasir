@@ -2,6 +2,10 @@
 session_start();
 include '../functions.php';
 
+if ($_SESSION['user'] != 'admin') {
+    header("Location: ../login.php");
+}
+
 // if ($_SESSION["admin"] != "admin"){
 //     echo "<script>
 //             window.location.href='login.php';

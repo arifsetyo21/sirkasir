@@ -22,6 +22,7 @@
                             <li><i class="fa fa-puzzle-piece"></i><a href="karyawan.php">Karyawan</a></li>
                             <li><i class="fa fa-id-badge"></i><a href="penjual.php">Penjual</a></li>
                             <li><i class="fa fa-bars"></i><a href="pelanggan.php">Pelanggan</a></li>
+                            <li><i class="fa fa-bars"></i><a href="admin.php">Admin</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">

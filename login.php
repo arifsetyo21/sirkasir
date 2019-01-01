@@ -29,7 +29,7 @@ if (isset($_POST["login"])) {
         header("Location: petugas.php");
         exit;   
       } elseif ($_SESSION["user"] == "admin") {
-        header("Location: dashboard-admin.php");
+        header("Location: admin/index.php");
         exit;
       } else {
         header("Location: login.php");

@@ -48,7 +48,20 @@ function tambahPenjual($data) {
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
+}
 
+function tambahPelanggan($data) {
+	global $conn;
+
+	$nama = $data["nama"];
+	$username = $data["username"];
+	$password = $data["password"];
+	$no_hp = $data["no_hp"];
+
+	$query = "INSERT INTO pelanggan VALUES ('', '$nama', '$username', '$password', '$no_hp')";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
 }
 
 function upload(){
@@ -174,6 +187,25 @@ function ubahPenjual($data) {
 
 	return mysqli_affected_rows($conn);
 
+}
+
+function ubahPelanggan($data) {
+	global $conn;
+
+	$id_pelanggan = $data['id_pelanggan'];
+	$nama = $data["nama"];
+	$username = $data["username"];
+	$password = $data["password"];
+	$no_hp = $data["no_hp"];
+
+	$query = "UPDATE pelanggan SET nama = '$nama',
+				username = '$username',
+				`password` = '$password',
+				no_hp = '$no_hp'
+				WHERE id_pelanggan = '$id_pelanggan'";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
 }
 
 function cart($data) {

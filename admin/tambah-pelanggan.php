@@ -1,6 +1,22 @@
 <?php 
 include '../functions.php';
-    // $id_karyawan= $_GET['id_karyawan'];
+
+if (isset($_POST["tambah"])) {
+   //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
+
+    if( tambahPelanggan($_POST) > 0){
+       echo "<script>
+             alert('data berhasil ditambahkan');
+             window.location.href = 'pelanggan.php';
+       </script>";
+    } else {
+       echo "<script>
+          alert('data gagal ditambahkan');
+      </script>";
+    }
+  }
+
+
 ?>
 
 <!doctype html>
@@ -14,7 +30,7 @@ include '../functions.php';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tambah Karyawan</title>
+    <title>Pelanggan</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,40 +107,29 @@ include '../functions.php';
                 <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Karyawan</strong>
+                                <strong>Tambah Data</strong> Pelanggan
                             </div>
                             <div class="card-body card-block">
-                                <form action="tambah-karyawan-proses.php" method="post" enctype="multipart/form-data"   class="form-horizontal">
+                                <form autocomplete="off" action="" method="post" class="form-horizontal">
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">Username </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="username" value="" placeholder="Masukkan Username" class="form-control" required></div>
+                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" autocomplete="off" required><small class="help-block form-text">Please enter name</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="password-input" class=" form-control-label">Password </label></div>
-                                        <div class="col-12 col-md-9"><input required type="password" id="password-input" name="password" value="" placeholder="Masukkan Password" class="form-control" required></div>
+                                        <div class="col col-md-3"><label for="input" class=" form-control-label">Username </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="username" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="nohp-input" class=" form-control-label">No HP </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="nohp-input" name="no_hp" value="" placeholder="Masukkan No HP" class="form-control" required></div>
+                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Password </label></div>
+                                        <div class="col-12 col-md-9"><input required type="password" id="harga-input" name="password" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="noktp-input" class=" form-control-label">No KTP</label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="noktp-input" name="no_ktp" value="" placeholder="Masukkan No KTP" class="form-control" required></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="bagian-input" class=" form-control-label">Bagian </label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="bagian" id="bagian-input" class="form-control">
-                                                <option value="" disabled selected>Pilih Bagian Untuk Karyawan Ini</option>
-                                                <option value="kasir">Kasir</option>
-                                                <option value="petugas">Petugas</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
-                                        </div>
+                                        <div class="col col-md-3"><label for="panen-input" class=" form-control-label">No HP </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="panen-input" name="no_hp" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" name="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin menambah Karyawan ini?')">
+                                <button type="submit" name="tambah" class="btn btn-primary btn-sm">
                                     <i class="fa fa-dot-circle-o"></i> Submit
                                 </button>
                                 <button type="reset" class="btn btn-danger btn-sm">
@@ -162,45 +167,6 @@ include '../functions.php';
                 </div>
                 <!-- /#event-modal -->
                 <!-- Modal - Calendar - Add Category -->
-                <div class="modal fade none-border" id="add-category">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title"><strong>Add a category </strong></h4>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="control-label">Category Name</label>
-                                            <input class="form-control form-white" placeholder="Enter name" type="text"
-                                                name="category-name" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label">Choose Category Color</label>
-                                            <select class="form-control form-white" data-placeholder="Choose a color..."
-                                                name="category-color">
-                                                <option value="success">Success</option>
-                                                <option value="danger">Danger</option>
-                                                <option value="info">Info</option>
-                                                <option value="pink">Pink</option>
-                                                <option value="primary">Primary</option>
-                                                <option value="warning">Warning</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                
-                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light save-category"
-                                    data-dismiss="modal">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- /#add-category -->
             </div>
             <!-- .animated -->

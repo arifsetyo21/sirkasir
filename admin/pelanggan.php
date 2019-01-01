@@ -1,6 +1,20 @@
 <?php 
+
+session_start();
 include '../functions.php';
-    // $id_karyawan= $_GET['id_karyawan'];
+
+// if ($_SESSION["admin"] != "admin"){
+//     echo "<script>
+//             window.location.href='login.php';
+//         </script>";
+// }
+
+$query = 'SELECT * FROM pelanggan';
+$result = mysqli_query($conn, $query);
+while ( $row = mysqli_fetch_assoc($result)) {
+   $rows[] = $row;
+}
+
 ?>
 
 <!doctype html>
@@ -14,7 +28,7 @@ include '../functions.php';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tambah Karyawan</title>
+    <title>Pelanggan</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,7 +50,6 @@ include '../functions.php';
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <script src="assets/js/script.js"></script>
-
     <style>
         #weatherWidget .currentDesc {
         color: #ffffff!important;
@@ -85,54 +98,45 @@ include '../functions.php';
         <?php include 'assets/php/dashboar-header.php'?>
         <!-- /#header -->
 
+        
         <div class="content">
             <div class="animated fadeIn">
-                <div class="row align-items-center">
-                <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Tambah Karyawan</strong>
+                                <strong class="card-title">Pelanggan</strong>
+                                <div class="float-right"><button class="btn btn-success btn-sm" onclick="addPelanggan()"><i class="fa fa-plus-square-o"></i> Tambah</button></div>
                             </div>
-                            <div class="card-body card-block">
-                                <form action="tambah-karyawan-proses.php" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">Username </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="username" value="" placeholder="Masukkan Username" class="form-control" required></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="password-input" class=" form-control-label">Password </label></div>
-                                        <div class="col-12 col-md-9"><input required type="password" id="password-input" name="password" value="" placeholder="Masukkan Password" class="form-control" required></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="nohp-input" class=" form-control-label">No HP </label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="nohp-input" name="no_hp" value="" placeholder="Masukkan No HP" class="form-control" required></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="noktp-input" class=" form-control-label">No KTP</label></div>
-                                        <div class="col-12 col-md-9"><input required type="text" id="noktp-input" name="no_ktp" value="" placeholder="Masukkan No KTP" class="form-control" required></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="bagian-input" class=" form-control-label">Bagian </label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="bagian" id="bagian-input" class="form-control">
-                                                <option value="" disabled selected>Pilih Bagian Untuk Karyawan Ini</option>
-                                                <option value="kasir">Kasir</option>
-                                                <option value="petugas">Petugas</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" name="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin menambah Karyawan ini?')">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                                </form>
-                            </div>
-                            
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th class="serial">#</th>
+                                            <th>ID</th>
+                                            <th>Nama</th>
+                                            <th>Username</th>
+                                            <th>No HP</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1;foreach ($rows as $row) :?>
+                                        <tr>
+                                            <td class="serial"><?= $i?>.</td>
+                                            <td> <?= $row["id_pelanggan"]?> </td>
+                                            <td>  <span class="name"><?= $row['nama']?></span> </td>
+                                            <td> <span class="product"><?= $row['username']?></span> </td>
+                                            <td> <span class="product"><?= $row['no_hp']?></span> </td>
+                                            <td>
+                                            <button type="button" class="btn btn-warning btn-sm" onclick="ubahPelanggan('<?= $row['id_pelanggan']?>')"><i class="fa fa-edit"></i>Ubah</button>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="delPelanggan('<?= $row['id_pelanggan']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
+                                            </td>
+                                        </tr>
+                                        <?php $i++; endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
                         </div>
                     </div>
                 </div>
@@ -193,7 +197,6 @@ include '../functions.php';
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                
                                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-danger waves-effect waves-light save-category"
                                     data-dismiss="modal">Save</button>
@@ -248,6 +251,7 @@ include '../functions.php';
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script src="assets/js/script.js"></script>
 
     <!--Local Stuff-->
 </body>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_SESSION["user"] == "pembeli") {
+if ($_SESSION["user"] == "admin") {
         $page = "Location: index.php";
 } else {
         $page = "Location: index.php";

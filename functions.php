@@ -108,6 +108,8 @@ function upload(){
 		move_uploaded_file($tmpName, '../assets/img/makanan/' . $namaFileBaru);
 	} else if ($admin == "penjual") {
 		move_uploaded_file($tmpName, '../assets/img/penjual/' . $namaFileBaru);
+	}else if ($admin == "bayar"){
+		move_uploaded_file($tmpName, '../assets/img/bayar/' . $namaFileBaru);
 	} else {
 		move_uploaded_file($tmpName, 'assets/img/makanan/' . $namaFileBaru);
 	}
@@ -125,6 +127,31 @@ function hapus($data) {
 
 	return mysqli_affected_rows($conn);
 }
+
+//ichsan
+function insertBayar($data){
+	global $conn;
+
+	$id_transaksi = htmlspecialchars($data["id_transaksi"]);
+	$date = date('Y-m-d');
+	
+	$gambar = upload();
+
+	$query =  "INSERT INTO `pembayaran_penjual` 
+	(`id_pem_penjual`, 
+	`tanggal_pembayaran`, 
+	`gambar`, 
+	`id_transaksi`) 
+	VALUES ('', 
+	'$date', 
+	'$gambar', 
+	'$id_transaksi')";
+	
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+//ichsan
 
 function ubah($data) {
 	global $conn;

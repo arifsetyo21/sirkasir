@@ -13,7 +13,7 @@
                         <a href="meja.php"><i class="menu-icon fa fa-leaf"></i>Meja </a>
                     </li>
                     <li class="">
-                        <a href="tanaman.php"><i class="menu-icon fa fa-leaf"></i>Pembayaran Penjual </a>
+                        <a href="pembayaran-penjual.php"><i class="menu-icon fa fa-leaf"></i>Pembayaran Penjual </a>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -49,6 +49,18 @@ function delKaryawan(param) {
 }
    //karyawan
 
+   //pembayaran penjual
+function moveDetailPembayaran(param){
+   window.location.assign('pembayaran-penjual-detail.php?id_penjual=' + param);
+}
+
+
+function bayarTransaksi(param,param2) {
+   window.location.assign('pembayaran-penjual-bayar.php?id_transaksi=' + param + '&id_penjual=' + param2);
+}
+
+   //pembayaran penjual
+
 //End of Ichsan
 
 function ubahMakanan(param) {

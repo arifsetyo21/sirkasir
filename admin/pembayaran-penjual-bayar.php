@@ -1,20 +1,20 @@
 <?php 
+include '../functions.php';
+    $id_transaksi= $_GET['id_transaksi'];
+    $id_penjual = $_GET['id_penjual'];
 
-    session_start();
-    include '../functions.php';
-
-    // if ($_SESSION["admin"] != "admin"){
-    //     echo "<script>
-    //             window.location.href='login.php';
-    //         </script>";
-    // }
-
-    $query = "SELECT COUNT(t.id_transaksi) as total,pe.id_penjual,pe.nama,pe.gambar FROM transaksi t INNER JOIN pesanan p ON t.id_pesanan=p.id_pesanan INNER JOIN item_pesanan ip ON p.id_pesanan=ip.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan INNER JOIN penjual pe ON m.id_penjual=pe.id_penjual WHERE t.id_transaksi NOT IN (SELECT id_transaksi FROM pembayaran_penjual) GROUP BY pe.id_penjual";
-    $result = mysqli_query($conn, $query);
-    while ( $row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-}
-
+    if (isset($_POST["submit"])) {
+        //$id_tanaman = htmlspecialchars($_POST['id_tanaman']);
+     
+         if( insertBayar($_POST) > 0){
+            echo "<script>
+                  alert('Pembayaran berhasil dilakukan');
+                  window.location.href = 'pembayaran-penjual-detail.php?id_penjual='+'$id_penjual';
+            </script>";
+         } else {
+            echo "Pembayaran gagal dilakukan";
+         }
+       }
 ?>
 
 <!doctype html>
@@ -28,7 +28,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Karyawan</title>
+    <title>Bayar</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -50,6 +50,7 @@
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <script src="assets/js/script.js"></script>
+
     <style>
         #weatherWidget .currentDesc {
         color: #ffffff!important;
@@ -98,47 +99,39 @@
         <?php include 'assets/php/dashboar-header.php'?>
         <!-- /#header -->
 
-        
         <div class="content">
             <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-lg-12">
+                <div class="row align-items-center">
+                <div class="col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Daftar Penjualan</strong>
+                                <strong>Bayar Transaksi</strong>
                             </div>
-                            <div class="table-stats order-table ov-h">
-                                <table class="table ">
-                                    <thead>
-                                        <tr>
-                                            <th class="serial">#</th>
-                                            <th class="avatar">Gambar</th>
-                                            <th>ID Penjual</th>
-                                            <th>Penjual</th>
-                                            <th>Total Transaksi</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1;foreach ($rows as $row) :?>
-                                        <tr>
-                                            <td class="serial"><?= $i?>.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="../assets/img/makanan/<?= $row['gambar'] ?>" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> <?= $row["id_penjual"]?> </td>
-                                            <td>  <span class="name"><?= $row['nama']?></span> </td>
-                                            <td>  <span class="name"><?= $row['total']?></span> </td>
-                                            <td>
-                                            <button type="button" class="btn btn-success btn-sm" onclick="moveDetailPembayaran('<?= $row['id_penjual']?>')"><i class="fa fa-edit"></i>Detail</button>
-                                            </td>
-                                        </tr>
-                                        <?php $i++; endforeach;?>
-                                    </tbody>
-                                </table>
-                            </div> <!-- /.table-stats -->
+                            <div class="card-body card-block">
+                                <form action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
+                                    <input type="hidden" value="bayar" name="admin">
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">ID Transaksi </label></div>
+                                        <div class="col-12 col-md-9"><p><?php echo $id_transaksi;?></p></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Foto Bukti Pembayaran</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <input type="file" class="btn btn-outline-secondary" name="gambar" id="gambar">
+                                        </div>
+                                        <input type="text" name="id_transaksi" value="<?= $id_transaksi?>" hidden>
+                                    </div> 
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" name="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin membayar Transaksi ini?')">
+                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                </button>
+                                <button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>
+                                </form>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -199,6 +192,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
+                                
                                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-danger waves-effect waves-light save-category"
                                     data-dismiss="modal">Save</button>
@@ -253,7 +247,6 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
-    <script src="assets/js/script.js"></script>
 
     <!--Local Stuff-->
 </body>

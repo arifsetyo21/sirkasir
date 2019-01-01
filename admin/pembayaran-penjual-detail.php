@@ -9,7 +9,11 @@
     //         </script>";
     // }
 
-    $query = "SELECT COUNT(t.id_transaksi) as total,pe.id_penjual,pe.nama,pe.gambar FROM transaksi t INNER JOIN pesanan p ON t.id_pesanan=p.id_pesanan INNER JOIN item_pesanan ip ON p.id_pesanan=ip.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan INNER JOIN penjual pe ON m.id_penjual=pe.id_penjual WHERE t.id_transaksi NOT IN (SELECT id_transaksi FROM pembayaran_penjual) GROUP BY pe.id_penjual";
+    $id_penjual=$_GET['id_penjual'];
+    $querySelectPenjual = mysqli_query($conn, "SELECT nama FROM penjual WHERE id_penjual='$id_penjual'");
+    $namaPenjual = mysqli_fetch_assoc($querySelectPenjual);
+
+    $query = "SELECT sum(ip.subtotal) as total,t.id_transaksi FROM transaksi t INNER JOIN pesanan p ON t.id_pesanan=p.id_pesanan INNER JOIN item_pesanan ip ON p.id_pesanan=ip.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan INNER JOIN penjual pe ON m.id_penjual=pe.id_penjual WHERE pe.id_penjual='$id_penjual' AND t.id_transaksi NOT IN (SELECT id_transaksi FROM pembayaran_penjual) GROUP BY ip.id_pesanan";
     $result = mysqli_query($conn, $query);
     while ( $row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
@@ -105,17 +109,15 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Daftar Penjualan</strong>
+                                <strong class="card-title">Detail Transaksi Penjualan <?php echo $namaPenjual['nama'];?></strong>
                             </div>
                             <div class="table-stats order-table ov-h">
                                 <table class="table ">
                                     <thead>
                                         <tr>
                                             <th class="serial">#</th>
-                                            <th class="avatar">Gambar</th>
-                                            <th>ID Penjual</th>
-                                            <th>Penjual</th>
-                                            <th>Total Transaksi</th>
+                                            <th>ID Transaksi</th>
+                                            <th>Nominal Yang Harus Dibayarkan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -123,16 +125,10 @@
                                     <?php $i = 1;foreach ($rows as $row) :?>
                                         <tr>
                                             <td class="serial"><?= $i?>.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="../assets/img/makanan/<?= $row['gambar'] ?>" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> <?= $row["id_penjual"]?> </td>
-                                            <td>  <span class="name"><?= $row['nama']?></span> </td>
+                                            <td> <?= $row["id_transaksi"]?> </td>
                                             <td>  <span class="name"><?= $row['total']?></span> </td>
                                             <td>
-                                            <button type="button" class="btn btn-success btn-sm" onclick="moveDetailPembayaran('<?= $row['id_penjual']?>')"><i class="fa fa-edit"></i>Detail</button>
+                                            <button type="button" class="btn btn-success btn-sm" onclick="bayarTransaksi('<?= $row['id_transaksi']?>','<?= $id_penjual?>')"><i class="fa fa-usd"></i> Bayar</button>
                                             </td>
                                         </tr>
                                         <?php $i++; endforeach;?>

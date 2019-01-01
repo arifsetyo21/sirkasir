@@ -96,7 +96,7 @@ if (isset($_POST["tambah"])) {
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <!-- Header-->
-        <?php include 'assets/php/dashboard-header.php'?>
+        <?php include 'assets/php/dashboar-header.php'?>
         <!-- /#header -->
 
         <div class="content">
@@ -116,6 +116,10 @@ if (isset($_POST["tambah"])) {
                                         </div>
                                     </div>
                                     <div class="row form-group">
+                                        <div class="col col-md-3"><label for="name-input" class=" form-control-label">Penjual </label></div>
+                                        <div class="col-12 col-md-9"><input required type="text" id="name-input" name="id_penjual" value="" placeholder="Enter Name" class="form-control" required><small class="help-block form-text">Please enter name</small></div>
+                                    </div>
+                                    <div class="row form-group">
                                         <div class="col col-md-3"><label for="name-input" class=" form-control-label">Nama </label></div>
                                         <div class="col-12 col-md-9"><input required type="text" id="name-input" name="nama" value="" placeholder="Enter Name" class="form-control" required><small class="help-block form-text">Please enter name</small></div>
                                     </div>
@@ -124,74 +128,13 @@ if (isset($_POST["tambah"])) {
                                         <div class="col-12 col-md-9"><input required type="number" id="panen-input" name="harga" value="" placeholder="Enter Day to Common Harvest" class="form-control" required><small class="help-block form-text">Please enter harvest time </small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Harga </label></div>
-                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="harga" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
+                                        <div class="col col-md-3"><label for="harga-input" class=" form-control-label">Stok </label></div>
+                                        <div class="col-12 col-md-9"><input required type="number" id="harga-input" name="stok" value="" placeholder="Enter Market Prize" class="form-control" required><small class="help-block form-text">Please enter market price</small></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Ketinggian</label></div>
-                                        <div class="col-12 col-md-9">
-                                        <?php 
-                                        $result_tinggi = mysqli_query($dbkonek, "SELECT * FROM ketinggian");
-                                        while ($row = mysqli_fetch_assoc($result_tinggi)) {
-                                           $tinggi[] = $row;
-                                        }
-                                        ?>
-                                            <select name="ketinggian" id="select" class="form-control">
-                                          <?php foreach ($tinggi as $t) :?>
-                                                <option value="<?= $t['id_ketinggian']?>"><?= $t['kategori']. " (".$t['min_tinggi']." - ".$t['max_tinggi']." Mdpl )";?></option>
-                                          <?php endforeach;?>
-                                            </select>
-                                        </div>
+                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Deskripsi</label></div>
+                                        <textarea name="deskripsi" id="deskripsi" required> </textarea>
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Suhu</label></div>
-                                        <div class="col-12 col-md-9">
-                                        <?php 
-                                        $result_suhu = mysqli_query($dbkonek, "SELECT * FROM suhu");
-                                        while ($row = mysqli_fetch_assoc($result_suhu)) {
-                                           $suhu_[] = $row;
-                                        }
-                                        ?>
-                                            <select name="suhu" id="select" class="form-control">
-                                          <?php foreach ($suhu_ as $s) :?>
-                                                <option value="<?= $s['id_suhu']?>"><?= $s['kategori']. " (".$s['min_suhu']." - ".$s['max_suhu']." C )";?></option>
-                                          <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Jenis Tanah</label></div>
-                                        <div class="col-12 col-md-9">
-                                        <?php 
-                                        $result_tanah = mysqli_query($dbkonek, "SELECT * FROM tanah");
-                                        while ($row = mysqli_fetch_assoc($result_tanah)) {
-                                           $tanah[] = $row;
-                                        }
-                                        ?>
-                                            <select name="jenis_tanah" id="select" class="form-control">
-                                          <?php foreach ($tanah as $t) :?>
-                                                <option value="<?= $t['id_tanah']?>"><?= $t['kategori']. " (".$t['ph_min']." - ".$t['ph_max']." mm/hari )";?></option>
-                                          <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Curah Hujan</label></div>
-                                        <div class="col-12 col-md-9">
-                                        <?php 
-                                        $result_curah = mysqli_query($dbkonek, "SELECT * FROM curah_hujan");
-                                        while ($row = mysqli_fetch_assoc($result_curah)) {
-                                           $curah[] = $row;
-                                        }
-                                        ?>
-                                            <select name="curah_hujan" id="select" class="form-control">
-                                          <?php foreach ($curah as $c) :?>
-                                                <option value="<?= $c['id_hujan']?>"><?= $c['kategori']. " (".$c['hujan_min']." - ".$c['hujan_max']." mm/hari )";?></option>
-                                          <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                
                             </div>
                             <div class="card-footer">
                                 <button type="submit" name="tambah" class="btn btn-primary btn-sm">

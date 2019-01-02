@@ -1,23 +1,16 @@
 <?php 
 
-    session_start();
-    include '../functions.php';
+session_start();
+include '../functions.php';
 
-    // if ($_SESSION["admin"] != "admin"){
-    //     echo "<script>
-    //             window.location.href='login.php';
-    //         </script>";
-    // }
-
-    $id_penjual=$_GET['id_penjual'];
-    $querySelectPenjual = mysqli_query($conn, "SELECT nama FROM penjual WHERE id_penjual='$id_penjual'");
-    $namaPenjual = mysqli_fetch_assoc($querySelectPenjual);
-
-    $query = "SELECT sum(ip.subtotal) as total,t.id_transaksi FROM transaksi t INNER JOIN pesanan p ON t.id_pesanan=p.id_pesanan INNER JOIN item_pesanan ip ON p.id_pesanan=ip.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan INNER JOIN penjual pe ON m.id_penjual=pe.id_penjual WHERE pe.id_penjual='$id_penjual' AND t.id_transaksi NOT IN (SELECT id_transaksi FROM pembayaran_penjual) GROUP BY ip.id_pesanan";
-    $result = mysqli_query($conn, $query);
-    while ( $row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-}
+// if ($_SESSION["admin"] != "admin"){
+//     echo "<script>
+//             window.location.href='login.php';
+//         </script>";
+// }
+$query = "SELECT DISTINCT  transaksi.id_transaksi, transaksi.id_pesanan, transaksi.tanggal_transaksi, transaksi.bayar ,transaksi.kembalian FROM transaksi ORDER BY tanggal_transaksi DESC";
+$penjual = query($query);
+$rows = $penjual;
 
 ?>
 
@@ -32,7 +25,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Karyawan</title>
+    <title>Riwayat Transaksi</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -109,47 +102,44 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Detail Transaksi Penjualan <?php echo $namaPenjual['nama'];?></strong>
+                                <strong class="card-title">Riwayat Transaksi</strong>                                
                             </div>
                             <div class="table-stats order-table ov-h">
                                 <table class="table ">
                                     <thead>
                                         <tr>
                                             <th class="serial">#</th>
-                                            <th>ID Transaksi</th>
-                                            <th>Nominal Yang Harus Dibayarkan</th>
+                                            <th class="avatar">ID Transaksi</th>
+                                            <th>Tanggal Transaksi</th>
+                                            <th>ID Pesanan</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $i = 1; $totalSemua = 0;foreach ($rows as $row) :?>
+                                    <?php $i = 1;foreach ($rows as $row) :?>
                                         <tr>
                                             <td class="serial"><?= $i?>.</td>
-                                            <td> <?= $row["id_transaksi"]?> </td>
-                                            <td>  <span class="name"><?= $row['total']?></span> </td>
+                                            <td>  <span class="name"><?= $row['id_transaksi']?></span> </td>
+                                            <td> <span class="product"><?= date("d-m-Y",strtotime($row['tanggal_transaksi']));?></span> </td>
+                                            <td> <span class="product"><?= $row['id_pesanan']?></span> </td>
+                                            <td> <span class="product"><?= $row['bayar'] - $row['kembalian']?></span> </td>
+                                            <td> <span class="product" style="color: green">Sudah dibayar</span> </td>                                          
                                             <td>
-                                            <button type="button" class="btn btn-success btn-sm" onclick="bayarTransaksi('<?= $row['id_transaksi']?>','<?= $id_penjual?>')"><i class="fa fa-usd"></i> Bayar</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="delTransaksi('<?= $row['id_transaksi']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
                                             </td>
                                         </tr>
-                                        <?php $totalSemua += $row['total'];?>
                                         <?php $i++; endforeach;?>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary btn-sm"><h2 class="pb-2 display-5">Total :</h2></button>
-                                <button type="submit" class="btn btn-primary btn-sm"><h2 class="pb-2 display-5">Rp. <?php echo $totalSemua?></h2></button>
-                            </div>
-                             <!-- /.table-stats -->
+                            </div> <!-- /.table-stats -->
                         </div>
                     </div>
                 </div>
         </div>
     </div><!-- .animated -->
 </div>
-
-                <div class="clearfix"></div>
-                <!-- Modal - Calendar - Add New Event -->
                 <!-- /#add-category -->
             </div>
             <!-- .animated -->
@@ -198,6 +188,14 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+      function delMakanan(param) {
+    var x = confirm('Yakin untuk hapus?');
+    if (x == true) {
+        window.location.assign('hapus-makanan.php?id_makanan=' + param);
+      }
+    }
+    </script>
 
     <!--Local Stuff-->
 </body>

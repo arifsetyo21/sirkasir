@@ -69,9 +69,6 @@ function upload(){
 	$ukuranFile = $_FILES["gambar"]["size"];
 	$error = $_FILES["gambar"]["error"];
 	$tmpName = $_FILES["gambar"]["tmp_name"];
-	if (isset($_POST['admin'])) {
-		$admin = $_POST['admin'];
-	}
 
 	// cek apakah ada gambar yang diupload apa tidak
 	if ($error === 4) {
@@ -104,12 +101,15 @@ function upload(){
 	$namaFileBaru .= '.';
 	$namaFileBaru .= $extensiGambar;
 
-	if ($admin == "makanan") {
-		move_uploaded_file($tmpName, '../assets/img/makanan/' . $namaFileBaru);
-	} else if ($admin == "penjual") {
-		move_uploaded_file($tmpName, '../assets/img/penjual/' . $namaFileBaru);
-	}else if ($admin == "bayar"){
-		move_uploaded_file($tmpName, '../assets/img/bayar/' . $namaFileBaru);
+	if (isset($_POST['admin'])) {
+		$admin = $_POST['admin'];
+		if ($admin == "makanan") {
+			move_uploaded_file($tmpName, '../assets/img/makanan/' . $namaFileBaru);
+		} else if ($admin == "penjual") {
+			move_uploaded_file($tmpName, '../assets/img/penjual/' . $namaFileBaru);
+		}else if ($admin == "bayar"){
+			move_uploaded_file($tmpName, '../assets/img/bayar/' . $namaFileBaru);
+		} 
 	} else {
 		move_uploaded_file($tmpName, 'assets/img/makanan/' . $namaFileBaru);
 	}
@@ -305,4 +305,75 @@ function antar($data) {
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
+}
+
+//report function
+function array2csv(array &$array)
+{
+   if (count($array) == 0) {
+     return null;
+   }
+   ob_start();
+   $df = fopen("php://output", 'w');
+   fputcsv($df, array_keys(reset($array)));
+   foreach ($array as $row) {
+      fputcsv($df, $row);
+   }
+   fclose($df);
+   return ob_get_clean();
+}
+
+function download_send_headers($filename) {
+	// disable caching
+	$now = gmdate("D, d M Y H:i:s");
+	header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+	header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+	header("Last-Modified: {$now} GMT");
+
+	// force download  
+	header("Content-Type: application/force-download");
+	header("Content-Type: application/octet-stream");
+	header("Content-Type: application/download");
+
+	// disposition / encoding on response body
+	header("Content-Disposition: attachment;filename={$filename}");
+	header("Content-Transfer-Encoding: binary");
+}
+
+
+function convert_to_csv($input_array, $output_file_name, $delimiter)
+{
+$temp_memory = fopen('php://memory', 'w');
+// loop through the array
+foreach ($input_array as $line) {
+// use the default csv handler
+fputcsv($temp_memory, $line, $delimiter);
+}
+
+fseek($temp_memory, 0);
+// modify the header to be CSV format
+header('Content-Type: application/csv');
+header('Content-Disposition: attachement; filename="' . $output_file_name . '";');
+// output the file to be downloaded
+fpassthru($temp_memory);
+}
+
+function outputCsv($fileName, $assocDataArray)
+{
+    ob_clean();
+    header('Pragma: public');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Cache-Control: private', false);
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment;filename=' . $fileName);    
+    if(isset($assocDataArray['0'])){
+        $fp = fopen('php://output', 'w');
+        fputcsv($fp, array_keys($assocDataArray['0']));
+        foreach($assocDataArray AS $values){
+            fputcsv($fp, $values);
+        }
+        fclose($fp);
+    }
+    ob_flush();
 }

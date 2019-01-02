@@ -1,23 +1,24 @@
 <?php 
 
-    session_start();
-    include '../functions.php';
+session_start();
+include '../functions.php';
 
-    // if ($_SESSION["admin"] != "admin"){
-    //     echo "<script>
-    //             window.location.href='login.php';
-    //         </script>";
-    // }
+// if ($_SESSION["admin"] != "admin"){
+//     echo "<script>
+//             window.location.href='login.php';
+//         </script>";
+// }
 
-    $id_penjual=$_GET['id_penjual'];
-    $querySelectPenjual = mysqli_query($conn, "SELECT nama FROM penjual WHERE id_penjual='$id_penjual'");
-    $namaPenjual = mysqli_fetch_assoc($querySelectPenjual);
+$halamanAktif = $_GET['halaman'];
+$dataPerhalaman = 10;
+$jumlahData = count(query("SELECT DISTINCT p.id_pesanan, p.tanggal_pesanan, p.id_meja, pe.username, p.status FROM pesanan p INNER JOIN item_pesanan ip ON p.id_pesanan = ip.id_pesanan INNER JOIN pelanggan pe ON pe.id_pelanggan = p.id_pelanggan"));
+$jumlahHalaman = ceil(($jumlahData/$dataPerhalaman));
+$indexAwal = ($halamanAktif * $dataPerhalaman) - $dataPerhalaman;
+// var_dump($jumlahHalaman);
 
-    $query = "SELECT sum(ip.subtotal) as total,t.id_transaksi FROM transaksi t INNER JOIN pesanan p ON t.id_pesanan=p.id_pesanan INNER JOIN item_pesanan ip ON p.id_pesanan=ip.id_pesanan INNER JOIN makanan m ON ip.id_makanan=m.id_makanan INNER JOIN penjual pe ON m.id_penjual=pe.id_penjual WHERE pe.id_penjual='$id_penjual' AND t.id_transaksi NOT IN (SELECT id_transaksi FROM pembayaran_penjual) GROUP BY ip.id_pesanan";
-    $result = mysqli_query($conn, $query);
-    while ( $row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-}
+$query = "SELECT DISTINCT p.id_pesanan, p.tanggal_pesanan, p.id_meja, pe.username, p.status FROM pesanan p INNER JOIN item_pesanan ip ON p.id_pesanan = ip.id_pesanan INNER JOIN pelanggan pe ON pe.id_pelanggan = p.id_pelanggan ORDER BY tanggal_pesanan DESC LIMIT $indexAwal, $dataPerhalaman";
+$penjual = query($query);
+$rows = $penjual;
 
 ?>
 
@@ -32,7 +33,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Karyawan</title>
+    <title>Riwayat Pesanan</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -109,47 +110,74 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Detail Transaksi Penjualan <?php echo $namaPenjual['nama'];?></strong>
+                                <strong class="card-title">Daftar Riwayat Pesanan</strong>
+                                <div class="float-right"><button class="btn btn-success btn-sm" onclick="addPenjual()"><i class="fa fa-plus-square-o"></i> Tambah</button></div>
                             </div>
                             <div class="table-stats order-table ov-h">
                                 <table class="table ">
                                     <thead>
                                         <tr>
                                             <th class="serial">#</th>
-                                            <th>ID Transaksi</th>
-                                            <th>Nominal Yang Harus Dibayarkan</th>
+                                            <th class="avatar">ID Pesanan</th>
+                                            <th>Tanggal Pesanan</th>
+                                            <th>ID Meja</th>
+                                            <th>Username</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $i = 1; $totalSemua = 0;foreach ($rows as $row) :?>
+                                    <?php $i = 1;foreach ($rows as $row) :?>
                                         <tr>
                                             <td class="serial"><?= $i?>.</td>
-                                            <td> <?= $row["id_transaksi"]?> </td>
-                                            <td>  <span class="name"><?= $row['total']?></span> </td>
+                                            <td>  <span class="name"><?= $row['id_pesanan']?></span> </td>
+                                            <td> <span class="product"><?= $row['tanggal_pesanan'];?></span> </td>
+                                            <td> <span class="product"><?= $row['id_meja']?></span> </td>
+                                            <td> <span class="product"><?= $row['username']?></span> </td>
+                                          <?php if ($row['status'] == '1') :?>
+                                            <td> <span class="product" style="color: green">Sudah dibayar</span> </td>
+                                          <?php else :?>
+                                            <td> <span class="product" style="color: red">Belum dibayar</span> </td>
+                                          <?php endif?>
                                             <td>
-                                            <button type="button" class="btn btn-success btn-sm" onclick="bayarTransaksi('<?= $row['id_transaksi']?>','<?= $id_penjual?>')"><i class="fa fa-usd"></i> Bayar</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="delPesanan('<?= $row['id_pesanan']?>')"><i class="fa fa-trash-o"></i>Hapus</button>
                                             </td>
                                         </tr>
-                                        <?php $totalSemua += $row['total'];?>
                                         <?php $i++; endforeach;?>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary btn-sm"><h2 class="pb-2 display-5">Total :</h2></button>
-                                <button type="submit" class="btn btn-primary btn-sm"><h2 class="pb-2 display-5">Rp. <?php echo $totalSemua?></h2></button>
-                            </div>
-                             <!-- /.table-stats -->
+                            </div> <!-- /.table-stats -->
                         </div>
                     </div>
+                </div>
+                <div class="mx-auto" >
+                <nav aria-label="..." class="" style="margin-left: 450px">
+                <ul class="pagination">
+                    <?php if ($halamanAktif > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?>" tabindex="-1">Previous</a>
+                        <?php endif ?>
+                        </li>
+                        <?php for ($i=1; $i < $jumlahHalaman + 1; $i++) :?>
+                                <?php if ($i == $halamanAktif): ?>
+                                    <li class="page-item active">
+                                        <a class="page-link halamanAktif" href="?halaman=<?= $i; ?>"><strong><?= $i; ?></strong></a>
+                                    </li>
+                                <?php else :?>
+                                    <li class="page-item"><a class="page-link" href="?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                                <?php endif ?>
+                            <?php endfor; ?>
+                            <?php if ($halamanAktif < $jumlahHalaman): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?>">Next</a>
+                                </li>
+                            <?php endif ?>
+                        </ul>
+                    </nav>
                 </div>
         </div>
     </div><!-- .animated -->
 </div>
-
-                <div class="clearfix"></div>
-                <!-- Modal - Calendar - Add New Event -->
                 <!-- /#add-category -->
             </div>
             <!-- .animated -->
@@ -198,6 +226,14 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+      function delMakanan(param) {
+    var x = confirm('Yakin untuk hapus?');
+    if (x == true) {
+        window.location.assign('hapus-makanan.php?id_makanan=' + param);
+      }
+    }
+    </script>
 
     <!--Local Stuff-->
 </body>

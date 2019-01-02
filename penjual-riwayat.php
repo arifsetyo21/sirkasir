@@ -10,10 +10,41 @@ if ($_SESSION["login"]) {
 
     $penjual = mysqli_fetch_assoc($result);
 
-
+    $now = query("SELECT YEAR(NOW()) as tahun, MONTH(NOW()) as bulan")[0];
+    if (isset($_GET['cari'])) {
+      if (isset($_GET['bulan'])) {
+        $bulan = $_GET['bulan'];
+        $tahun = $_GET['tahun'];
+      }
+    } else {
+      $bulan = $now['bulan'];
+      $tahun = $now['tahun'];
+    }
+    
     // join tabel 4 tabel dengan nama column yang sama menggunakan as
-    $riwayat = query("SELECT p.tanggal_pesanan as tanggal_pesanan, p.id_pesanan, m.id_makanan, m.nama as nama_makanan, i.jumlah, p.id_meja, pl.nama as nama_pelanggan, i.subtotal, i.status, m.id_penjual as id_penjual FROM pesanan p INNER JOIN item_pesanan i ON p.id_pesanan=i.id_pesanan INNER JOIN makanan m ON i.id_makanan=m.id_makanan INNER JOIN pelanggan pl ON p.id_pelanggan = pl.id_pelanggan WHERE p.id_pesanan IN (SELECT id_pesanan FROM transaksi) AND m.id_penjual = '$id_penjual'");
+
+    $riwayat = query("SELECT * FROM pesanan p INNER JOIN item_pesanan ip ON p.id_pesanan = ip.id_pesanan INNER JOIN makanan m ON m.id_makanan = ip.id_makanan WHERE p.id_pesanan IN (SELECT id_pesanan FROM transaksi) AND MONTH(tanggal_pesanan) = '$bulan' AND YEAR(tanggal_pesanan)= '$tahun'");
+    $result2 = mysqli_query($conn, "SELECT MONTH(tanggal_transaksi) as 'bulan' FROM transaksi GROUP BY MONTH(tanggal_transaksi)");
+    $result = mysqli_query($conn, "SELECT YEAR(tanggal_transaksi) as 'tahun' FROM transaksi GROUP BY YEAR(tanggal_transaksi)");
+    $bulanDB = mysqli_fetch_assoc($result2);
+    $tahunDB = mysqli_fetch_row($result)[0];
+    $tahuns[] = $now['tahun'];
+    $tahuns[] = $tahunDB;
+    // var_dump($tahun);
+    // var_dump($tahuns);
     //var_dump($riwayat);
+    //var_dump($data);
+    // if (isset($now)) {
+    //   var_dump($now);
+    // }
+    // var_dump($bulan);
+    // var_dump($bulanDB);
+    if (isset($_GET['report'])) {
+      outputCsv('expenses2.csv', $riwayat);
+      die();
+    }
+    // var_dump($riwayat);
+    
   } else {
     header("Location: login.php");
   }
@@ -39,24 +70,7 @@ if ($_SESSION["login"]) {
    <div class="columns is-marginless">
 
     <div class="column is-2">
-     <aside class="sidebar menu is-hidden-mobile is-uppercase has-text-weight-bold ">
-      <div class="avatar has-text-centered">
-       <figure class="img-avatar">
-        <img src="assets/img/avatar.png" alt="">
-       </figure>
-       <div class="id-admin"><?php echo $penjual["username"] ?></div>
-      </div>
-      <hr>
-      <p class="menu-label">General</p>
-      <ul class="menu-list">
-       <li><a href="dashboard-penjual.php">Pesanan</a></li>
-      </ul>
-      <p class="menu-label">Transaction</p>
-      <ul class="menu-list">
-       <li><a class="is-active" href="penjual-riwayat.php">Riwayat</a></li>
-      </ul>
-
-     </aside>
+    <?php include 'assets/html/leftpanel-penjual.php'?>
     </div>
 
     <div class="column is-10">
@@ -65,8 +79,9 @@ if ($_SESSION["login"]) {
       <div class="pesanan" id="tabel-pesanan">
        <table style="100%">
        <div class="control">
+         <form action="" method="">
           <div class="select">
-            <select required>
+            <select name="bulan" required>
                 <option value="1">Januari</option>
                 <option value="2">Februari</option>
                 <option value="3">Maret</option>
@@ -81,21 +96,41 @@ if ($_SESSION["login"]) {
                 <option value="12">Desember</option>
             </select>
           </div>
+          <div class="select">
+            <select name="tahun" required>
+                <?php foreach ($tahuns as $t) :?>
+                  <option value="<?= $t?>"><?=$t?></option>
+                <?php endforeach;?>
+            </select>
+          </div>
+          <button type="submit" class="button is-primary" name="cari"><i class="fas fa-search"></i></button>
+          <span class="title is-5" style="justify-content: flex-end; margin-left: 390px"><?php echo "Pada Bulan : $bulan/$tahun" ?></span>
         </div>
+        
+        </form>
         <hr style="border: 1px solid rgba(0,0,0,0.1)">
         <thead>
         <?php $i = 1;?>
-         <tr><th>#</th><th>No. Order</th><th>Pesanan</th><th>Jumlah</th><th>Meja</th><th>Atas Nama</th><th>Subtotal</th><th>Status</th></tr>
+         <tr>
+           <th>#</th>
+           <th>No. Order</th>
+           <th>Pesanan</th>
+           <th>Jumlah</th>
+           <th>Meja</th>
+           <th>Id Pelanggan</th>
+           <th>Subtotal</th>
+           <th>Status</th>
+          </tr>
         </thead>
         <tbody>
           <?php foreach ($riwayat as $r) :?>
-            <tr><td><?php echo $i; $id_makanan = $r['id_makanan']; $id_pesanan = $r['id_pesanan']; $i++?></td><td><?php echo $r['id_pesanan']?></td><td><?php echo $r['nama_makanan'] ?></td><td><?php echo $r['jumlah']?></td><td><?php echo $r['id_meja']?></td><td><?= $r['nama_pelanggan']?></td><td><?= $r['subtotal']?></td><td><span class="button is-static">Selesai</span></td></tr>
+            <tr><td><?php echo $i; $id_makanan = $r['id_makanan']; $id_pesanan = $r['id_pesanan']; $i++?></td><td><?php echo $r['id_pesanan']?></td><td><?php echo $r['nama'] ?></td><td><?php echo $r['jumlah']?></td><td><?php echo $r['id_meja']?></td><td><?= $r['id_pelanggan']?></td><td><?= $r['subtotal']?></td><td><span class="button is-static">Selesai</span></td></tr>
           <?php endforeach; ?>
         </tbody>
        </table> 
       </div>
      </div>
-
+     <a class="button is-info" style="margin-left: 50%; margin-right:50%" href="?report=true&cari=&bulan=<?= $bulan?>&tahun=<?= $tahun?>">Download Laporan</a>
     </div>
 
    </div>

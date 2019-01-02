@@ -9,6 +9,7 @@ if (isset($_POST["login"])) {
   $username = htmlspecialchars($_POST["username"]);
   $password = htmlspecialchars($_POST["password"]);
   $login    = htmlspecialchars($_POST["login"]);
+  $meja = htmlspecialchars($_POST['meja']);
   
   $result = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '$username'");
   // var_dump($result);
@@ -18,6 +19,8 @@ if (isset($_POST["login"])) {
     //cek password
     $row = mysqli_fetch_assoc($result);
     if ($password == $row["password"]) {
+     if (!empty($meja)) { 
+      
       $id_pelanggan = $row["id_pelanggan"];
       $_SESSION["login"] = true;
       $_SESSION["id_pelanggan"] = $id_pelanggan;
@@ -26,6 +29,11 @@ if (isset($_POST["login"])) {
   
         header("Location: dashboard-pembeli.php");
         exit;
+        } else {
+          echo "<script>
+          alert('Meja tidak tersedia');
+            </script>";
+        }
       } else {
       echo "<script>
           alert('password tidak cocok');

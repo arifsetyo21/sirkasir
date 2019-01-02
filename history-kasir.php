@@ -97,9 +97,9 @@ if ($_SESSION["login"]) {
 	<div class="column is-10">
 	
 	<div class="columns is-marginless is-variable is-1 is-centered">
-		<div class="column is-2">
+		<div class="column is-2 select">
         <form action="" method="POST" name="">
-			<select name="bulan" id="">
+			<select name="bulan" id="" class="select">
                 <option value="1">Januari</option>
                 <option value="2">Februari</option>
                 <option value="3">Maret</option>
@@ -114,7 +114,7 @@ if ($_SESSION["login"]) {
                 <option value="12">Desember</option>
             </select>
         </div>
-        <div class="column is-2">
+        <div class="column is-2 select">
             <select name="tahun" id="">
                 <?php
                     //ngisi option di selection sebanyak tahun yang ada pada database table transaksi

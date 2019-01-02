@@ -39,24 +39,7 @@ if ($_SESSION["login"]) {
    <div class="columns is-marginless">
 
     <div class="column is-2">
-     <aside class="sidebar menu is-hidden-mobile is-uppercase has-text-weight-bold ">
-      <div class="avatar has-text-centered">
-       <figure class="img-avatar">
-        <img src="assets/img/avatar.png" alt="">
-       </figure>
-       <div class="id-admin"><?php echo $penjual["username"] ?></div>
-      </div>
-      <hr>
-      <p class="menu-label">General</p>
-      <ul class="menu-list">
-       <li><a href="">Edit Profil</a></li>
-      </ul>
-      <p class="menu-label">Transaction</p>
-      <ul class="menu-list">
-       <li><a href="penjual-riwayat.php">Riwayat</a></li>
-      </ul>
-
-     </aside>
+      <?php include 'assets/html/leftpanel-penjual.php'?>
     </div>
 
     <div class="column is-10">

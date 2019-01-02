@@ -66,17 +66,17 @@ function delKaryawan(param) {
 }
 //karyawan
 
-   //pembayaran penjual
-function moveDetailPembayaran(param){
+//pembayaran penjual
+function moveDetailPembayaran(param) {
    window.location.assign('pembayaran-penjual-detail.php?id_penjual=' + param);
 }
 
 
-function bayarTransaksi(param,param2) {
+function bayarTransaksi(param, param2) {
    window.location.assign('pembayaran-penjual-bayar.php?id_transaksi=' + param + '&id_penjual=' + param2);
 }
 
-   //pembayaran penjual
+//pembayaran penjual
 
 //End of Ichsan
 
@@ -155,5 +155,12 @@ function delHistory(param) {
    var x = confirm('Yakin untuk hapus?');
    if (x == true) {
       window.location.assign('hapus-history.php?id_history=' + param);
+   }
+}
+
+function delPesanan(param) {
+   var x = confirm('Yakin untuk hapus?');
+   if (x == true) {
+      window.location.assign('hapus-pesanan.php?id_pesanan=' + param);
    }
 }

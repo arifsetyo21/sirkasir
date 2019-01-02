@@ -11,9 +11,11 @@ if ($_SESSION["login"]) {
     $penjual = mysqli_fetch_assoc($result);
     
     $result2 = mysqli_query($conn, "SELECT * FROM makanan WHERE id_penjual = '$id_penjual'");
-    while($row = mysqli_fetch_assoc($result2)){
-      $rows_makanan[] = $row;
-    }
+
+    
+  while($row = mysqli_fetch_assoc($result2)){
+    $rows_makanan[] = $row;
+  } 
 
   } else {
     header("Location: login.php");
@@ -42,24 +44,7 @@ if ($_SESSION["login"]) {
    <div class="columns is-marginless">
 
     <div class="column is-2">
-     <aside class="sidebar menu is-hidden-mobile is-uppercase has-text-weight-bold ">
-      <div class="avatar has-text-centered">
-       <figure class="img-avatar">
-        <img src="assets/img/avatar.png" alt="">
-       </figure>
-       <div class="id-admin"><?= $penjual["username"] ?></div>
-      </div>
-      <hr>
-      <p class="menu-label">General</p>
-      <ul class="menu-list">
-       <li><a href="dashboard-penjual.php">Pesanan</a></li>
-      </ul>
-      <p class="menu-label">Transaction</p>
-      <ul class="menu-list">
-       <li><a href="penjual-riwayat.php">Riwayat</a></li>
-      </ul>
-
-     </aside>
+    <?php include 'assets/html/leftpanel-penjual.php'?>
     </div>
     <div class="column is-10">
     <div class="level">
@@ -73,8 +58,9 @@ if ($_SESSION["login"]) {
          <tr><th>#</th><th>Gambar</th><th>Nama</th><th>Deskripsi</th><th>Harga</th><th>Aksi</th></tr>
         </thead>
         <tbody>
-        <?php $i = 1 ?>
-        <?php foreach ($rows_makanan as $makanan) : ?>
+        <?php if (isset($rows_makanan)) {?>
+          <?php $i = 1 ?>
+          <?php foreach ($rows_makanan as $makanan) : ?>
           <?php $id_makanan = $makanan["id_makanan"]?>
          <tr>
           <td><?= $i?></td>
@@ -89,6 +75,7 @@ if ($_SESSION["login"]) {
           </td>
          </tr>
         <?php $i++; endforeach; ?>
+        <?php }?>
         </tbody>
        </table>
       </div>

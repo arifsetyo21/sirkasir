@@ -8,9 +8,11 @@ if ($_SESSION["login"]) {
       if (isset($_GET)) {
          $id_pesanan = $_GET["no"];
          $id_pelanggan = $_SESSION["id_pelanggan"];
+         $meja = $_SESSION['meja'];
          $query = "SELECT * FROM item_pesanan INNER JOIN makanan ON item_pesanan.id_makanan=makanan.id_makanan WHERE id_pesanan = '$id_pesanan'";
          $items = query($query);
          $pelanggan = query("SELECT nama FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'");
+         // setlocale(LC_MONETARY,"id_ID");
       }
    } else {
       header("Location: login-pembeli.php");
@@ -88,7 +90,7 @@ if ($_SESSION["login"]) {
    <br>
   </div>
   <div>
-   <p class="is-size-6">No Order : <?= $id_pesanan?><br>Nama Pemasan : <?= $pelanggan[0]['nama'];?><br>No Meja : MJ1</p>
+   <p class="is-size-6">No Order : <?= $id_pesanan?><br>Nama Pemasan : <?= $pelanggan[0]['nama'];?><br>No Meja : <?php $meja ?></p>
    <br>
   </div>
    <table class="" style="">
@@ -114,7 +116,8 @@ if ($_SESSION["login"]) {
    </tfoot>
    </table>
    <div  style="margin: auto; text-align: center">
-  <p style="inline: block"><h3 style="inline: block">TOTAL BAYAR</h3><input class="input" type="number" value="<?php echo $total;?>" style="width: 200px; text-align:center;" disabled></p>
+
+  <p style="inline: block"><h3 style="inline: block">TOTAL BAYAR</h3><input class="input" type="number" value="<?php echo $total?>" style="width: 200px; text-align:center;" disabled></p>
   </div>
   </div>
  </div>

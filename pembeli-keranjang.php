@@ -38,14 +38,14 @@ if ($_SESSION["login"]) {
 
 				// Ambil id_pesanan berdasarkan urutan tanggal
 				$id_pesanan = (mysqli_fetch_array(mysqli_query($conn, "SELECT id_pesanan as id_pesanan FROM pesanan ORDER BY UNIX_TIMESTAMP(tanggal_pesanan) DESC")));
-				//var_dump($id_pesanan[0]);
+				// var_dump($id_pesanan[0]);
 
 				//insert item_pesanan
 				foreach ($_SESSION["items"] as $item => $val) {
 					$jumlah = $val["jumlah"];
 					$subtotal = $val["subtotal"];					
 					mysqli_query($conn, "INSERT INTO item_pesanan VALUES ('$id_pesanan[0]', '$item', '$jumlah', '$subtotal','0')");
-				}	
+				}
 				
 
 
@@ -155,6 +155,7 @@ if ($_SESSION["login"]) {
 	   </table>
 	  </div>
 	 </div>
+	 <?//php var_dump($_SESSION)?>
 	 <div class="columns is-marginless noprint">
 		<div class="column is-2 is-offset-10">
 			<!-- <form action="" method="post"> -->

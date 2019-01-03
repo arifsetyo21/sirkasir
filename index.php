@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>HTML Template</title>
+	<title>Sir Kasir</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -54,8 +54,6 @@
 					<!-- Logo -->
 					<div class="navbar-brand">
 						<a href="index.html">
-							<img class="logo" src="assets/img/landing/logo.png" alt="logo">
-							<img class="logo-alt" src="assets/img/landing/logo-alt.png" alt="logo">
 						</a>
 					</div>
 					<!-- /Logo -->
@@ -87,11 +85,8 @@
 					<!-- home content -->
 					<div class="col-md-10 col-md-offset-1">
 						<div class="home-content">
-							<h1 class="white-text">We Break Your Hungry</h1>
-							<p class="white-text">Morbi mattis felis at nunc. Duis viverra diam non justo. In nisl. Nullam sit amet magna in magna gravida vehicula. Mauris tincidunt sem sed arcu. Nunc posuere.
-							</p>
-							<a href="login-pembeli.php" class="white-btn">Get Started!</a>
-							<a href="#" class="main-btn">Learn more</a>
+							<h1 class="white-text">Sir Kasir</h1>
+							<a href="login-pembeli.php" class="white-btn">Langsung Pesan</a>
 						</div>
 					</div>
 					<!-- /home content -->
@@ -117,7 +112,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="assets/img/landing/logo-alt.png" alt="logo"></a>
+						<!-- <a href="index.html"><img src="assets/img/landing/logo-alt.png" alt="Sir Kasir"></a> -->
 					</div>
 					<!-- /footer logo -->
 

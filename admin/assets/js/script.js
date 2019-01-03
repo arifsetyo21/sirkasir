@@ -80,6 +80,10 @@ function bayarTransaksi(param, param2) {
 
 //End of Ichsan
 
+function addMakanan() {
+   window.location.assign('tambah-makanan.php');
+}
+
 function ubahMakanan(param) {
    window.location.assign('ubah-makanan.php?id_makanan=' + param);
 }

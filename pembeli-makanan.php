@@ -50,7 +50,7 @@ require 'functions.php';
                     <div class="card" style="border-radius: 0.35rem">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                            <img class="foto-toko" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" style="border-radius: 1rem; padding: 0.5rem">
+                            <img class="foto-toko" src="assets/img/makanan/<?=$m['gambar']?>" alt="Placeholder image" style="border-radius: 1rem; padding: 0.5rem">
                             </figure>
                         </div>
                         <form action="" method="post">
@@ -64,14 +64,12 @@ require 'functions.php';
                             </div>
 
                             <div class="content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                            <a href="#">#css</a> <a href="#">#responsive</a>
+                            <p class="subtitle is-6">Rp. <?= $m["desc"]?></p>
                             <br>
-                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2019</time>
                             </div>
                             <div class="field columns">
-                              <div class="control column is-half">
+                              <div class="control column">
                                  <div class="columns">
                                     <div class="column">
                                        <a href="?id_penjual=<?= $id_penjual?>&amp;act=min&amp;id_makanan=<?php echo $m["id_makanan"]?>" class="button is-small is-success"><i class="fas fa-minus-square"></i></a>
@@ -84,10 +82,10 @@ require 'functions.php';
                                     </div>
                                  </div>
                               </div>
-                              <div class="control column is-one-quarter">
+                            </div>
+                            <div class="control column">
                                  <a href="?id_penjual=<?= $id_penjual?>&amp;act=add&amp;id_makanan=<?php echo $m["id_makanan"]?>" class="button is-success">Tambah ke Keranjang</a>
                               </div>
-                            </div>
                             </form>
                         </div>
                     </div>

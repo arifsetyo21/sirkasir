@@ -33,7 +33,7 @@ if (isset($_POST["tambah"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Ubah Penjual</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -117,7 +117,7 @@ if (isset($_POST["tambah"])) {
                                     <img class="rounded-circle mx-auto d-block" src="../assets/img/penjual/<?= $penjual['gambar'];?>" alt="Card image cap" width="250px"><br>
                                 </div>
                                 <form autocomplete="off" action="" method="post" enctype="multipart/form-data"   class="form-horizontal">
-                                <input type="text" value="<?= $id_penjual?>" name="id_penjual">
+                                <input type="text" value="<?= $id_penjual?>" name="id_penjual" hidden>
                                 <input type="text" value="penjual" name="admin" hidden>
                                 <input type="text" value="<?= $penjual['gambar']?>" name="gambarLama" hidden>
                                     <div class="row form-group">
